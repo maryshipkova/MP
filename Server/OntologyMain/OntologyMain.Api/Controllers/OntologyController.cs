@@ -1,30 +1,41 @@
-﻿using CommonLibraries.Response;
+﻿using System;
+using CommonLibraries.Response;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OntologyMain.Api.ViewModels;
 using OntologyMain.Data.Repositories;
 
 namespace OntologyMain.Api.Controllers
 {
   [EnableCors("AllowAllOrigin")]
-  [Route("api/[controller]")]
+  [Route("api/ontology")]
   [ApiController]
   public class OntologyController : ControllerBase
   {
     private OntologyRepository Db { get; }
-    private ILogger<OntologyController> Logger { get; }
+    private ILogger<PatientsController> Logger { get; }
 
-    public OntologyController(ILogger<OntologyController> logger, OntologyRepository db)
+    public OntologyController(ILogger<PatientsController> logger, OntologyRepository db)
     {
       Logger = logger;
       Db = db;
     }
 
-    // GET api/values
-    [HttpGet("HelloWorld")]
-    public IActionResult HelloWorld()
+
+    [HttpGet("symptoms")]
+    public IActionResult GetSymptoms()
     {
-      return new OkResponseResult("Hello World!");
+      throw new NotImplementedException();
     }
+
+    [HttpGet("drugs")]
+    public IActionResult GetDrugs()
+    {
+      throw new NotImplementedException();
+    }
+
+
+
   }
 }
