@@ -56,11 +56,11 @@ namespace OntologyMain.Api.Controllers
     }
 
     [HttpPost("drugs")]
-    public async Task<IActionResult> CreateDrug([FromBody] string name)
+    public async Task<IActionResult> CreateDrug([FromBody] CreateDrugViewModel drugViewModel)
     {
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateDrug)}: Start.");
 
-      var newDrug = await Db.CreateDrug(name);
+      var newDrug = await Db.CreateDrug(drugViewModel.Name);
 
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateDrug)}: End.");
       return new OkResponseResult("Drug", new {Drug = newDrug});

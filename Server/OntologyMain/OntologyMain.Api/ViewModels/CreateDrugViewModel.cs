@@ -2,11 +2,9 @@
 
 namespace OntologyMain.Api.ViewModels
 {
-  public class CreateSymptomViewModel
+  public class CreateDrugViewModel
   {
     [Required]
     public string Name { get; set; }
-
-    public float NormalIntensity { get; set; } = 0;
   }
 }
