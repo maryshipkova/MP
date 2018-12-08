@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.ViewModels
@@ -10,6 +9,5 @@ namespace OntologyMain.Api.ViewModels
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
     public SexType SexType { get; set; }
-    public List<DiagnosisViewModel> Diagnoses { get; set; }
   }
 }
