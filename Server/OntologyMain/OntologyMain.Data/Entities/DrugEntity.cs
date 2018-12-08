@@ -7,7 +7,7 @@ namespace OntologyMain.Data.Entities
   public class DrugEntity
   {
     [Key]
-    public int DrugEntityId { get; set; }
+    public int DrugId { get; set; }
 
     public string Name { get; set; }
   }

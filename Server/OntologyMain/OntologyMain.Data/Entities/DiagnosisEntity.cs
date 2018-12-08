@@ -8,7 +8,7 @@ namespace OntologyMain.Data.Entities
   public class DiagnosisEntity
   {
     [Key]
-    public int DiagnosisEntityId { get; set; }
+    public int DiagnosisId { get; set; }
 
     public int PatientId { get; set; }
     public int SymptomId { get; set; }
