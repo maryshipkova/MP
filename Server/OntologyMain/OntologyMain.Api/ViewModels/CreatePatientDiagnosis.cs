@@ -13,8 +13,6 @@ namespace OntologyMain.Api.ViewModels
 
     public float PatientIntensity { get; set; } = 0;
 
-    public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
-
     public class CreatePatientDiagnosisDrug
     {
       [Required]
