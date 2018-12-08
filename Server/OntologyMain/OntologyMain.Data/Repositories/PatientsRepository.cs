@@ -52,7 +52,8 @@ namespace OntologyMain.Data.Repositories
     public async Task<DiagnosisDto> AddPatientDiagnosis(int patientId, float patientDiagnosisIntensity, int symptomId, List<(int DrugId, float Dosage)> drugs)
     {
       var symptom = await Db.SymptomEntities.FirstAsync(x => x.SymptomId == symptomId);
-      var drugsDtos = await Db.DrugEntities.Where(x => drugs.Any(drug => drug.DrugId == x.DrugId)).Select(x=>new DiagnosisDrugDto{ DrugId = x.DrugId,  Name = x.Name, Dosage = drugs.First(drug=> drug.DrugId == x.DrugId).Dosage }).ToListAsync();
+      var drugEntities = await Db.DrugEntities.Where(x => drugs.Any(drug => drug.DrugId == x.DrugId)).ToListAsync();
+      var drugsDtos = drugEntities.Select(x=>new DiagnosisDrugDto{ DrugId = x.DrugId,  Name = x.Name, Dosage = drugs.First(drug=> drug.DrugId == x.DrugId).Dosage }).ToList();
 
       var diagnosis = new DiagnosisEntity
       {
@@ -64,7 +65,9 @@ namespace OntologyMain.Data.Repositories
 
       Db.DiagnosisEntities.Add(diagnosis);
 
-      var diagnosisDrugs = drugsDtos.Select(x => new DiagnosisDrugEntity {Dosage = x.Dosage, DrugId = x.DrugId}).ToList();
+      await Db.SaveChangesAsync();
+
+      var diagnosisDrugs = drugsDtos.Select(x => new DiagnosisDrugEntity { DiagnosisId = diagnosis.DiagnosisId, Dosage = x.Dosage, DrugId = x.DrugId}).ToList();
       Db.DiagnosisDrugEntities.AddRange(diagnosisDrugs);
 
       await Db.SaveChangesAsync();
