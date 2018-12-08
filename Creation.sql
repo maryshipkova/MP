@@ -1,0 +1,71 @@
+CREATE DATABASE Ontology
+
+GO
+
+USE Ontology
+
+GO
+
+CREATE TABLE [Patient]
+(
+    [PatientID] INT IDENTITY(1,1) NOT NULL,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50) NOT NULL,
+    [BirthDate] DATETIME2 NOT NULL DEFAULT(GETDATE()),
+    [SexType] INT NOT NULL DEFAULT(0),
+	CONSTRAINT [PK_Patient] PRIMARY KEY CLUSTERED ([PatientID] ASC)
+)
+
+GO
+
+CREATE TABLE [Symptom]
+(
+    [SymptomID] INT IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(50) NOT NULL,
+	[NormalIntensity] FLOAT(7) NOT NULL DEFAULT(0),
+	CONSTRAINT [PK_Symptom] PRIMARY KEY CLUSTERED ([SymptomID] ASC)
+)
+
+GO
+
+CREATE TABLE [Diagnosis]
+(
+    [DiagnosisID] INT IDENTITY(1,1) NOT NULL,
+	[PatientID] INT NOT NULL,
+	[SymptomID] INT NOT NULL,
+	[PatientIntensity] FLOAT(7) NOT NULL DEFAULT(0),
+	[UpdatedDate] DATETIME2 NOT NULL DEFAULT(GETDATE()),
+	CONSTRAINT [PK_Diagnosis] PRIMARY KEY CLUSTERED ([DiagnosisID] ASC)
+)
+
+GO
+
+CREATE TABLE [Drug]
+(
+    [DrugID] INT IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(50) NOT NULL,
+	CONSTRAINT [PK_Drug] PRIMARY KEY CLUSTERED ([DrugID] ASC)
+)
+
+GO
+
+CREATE TABLE [DiagnosisDrug]
+(
+    [DiagnosisID] INT NOT NULL,
+	[DrugID] INT NOT NULL,
+	[Dosage] FLOAT(7) NOT NULL DEFAULT(0)
+)
+
+GO
+
+CREATE PROCEDURE [dbo].[uspClearData]
+AS
+BEGIN
+	TRUNCATE TABLE Diagnosis
+	TRUNCATE TABLE DiagnosisDrug
+	TRUNCATE TABLE Drug
+	TRUNCATE TABLE Patient
+	TRUNCATE TABLE Symptom
+END;
+
+GO
