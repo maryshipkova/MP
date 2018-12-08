@@ -12,7 +12,7 @@ using OntologyMain.Data.Repositories;
 namespace OntologyMain.Api.Controllers
 {
   [EnableCors("AllowAllOrigin")]
-  [Route("api/patients")]
+  [Route("patients")]
   [ApiController]
   public class PatientsController : ControllerBase
   {
