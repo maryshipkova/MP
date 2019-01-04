@@ -3,21 +3,15 @@
 
 import React from 'react';
 import ReactDom from 'react-dom';
-import {PatientList} from 'components/PatientList'
-import axios from 'axios'
+import {PatientList} from 'components/PatientList';
+import {PatientInput} from 'components/PatientInput';
 
 class Check extends React.Component {
-
     render() {
-        //Check HelloWorld
-        axios.get('/api/Ontology/HelloWorld')
-        .then(response => {
-            console.log(response.data.message);
-        })
-
-        return <div>
+        return <React.Fragment>
             <PatientList/>
-        </div>;
+            <PatientInput/>
+        </React.Fragment>;
     }
 }
 

@@ -1,4 +1,4 @@
-// Модель списка пациентов
+// @flow
 
 import {PatientModel} from './PatientModel'
 
