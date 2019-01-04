@@ -1,28 +1,26 @@
-// Модель пациента
+// @flow
+
+import {sexType} from "types/SexType";
+
 export class PatientModel {
-    
     constructor(
-    id: number,
-    firstName: string,
-    secondName: string,
-    middleName: string,
-    age: number,
-    gender: string,
-    image: string){
-        this.id = id;
+        patientId: number,
+        firstName: string,
+        secondName: string,
+        birthDate: Date,
+        sexType: sexType
+    ) {
+
+        this.patientId = patientId;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.middleName = middleName;
-        this.age = age;
-        this.gender = gender;
-        this.image = image;
+        this.birthDate = birthDate;
+        this.sexType = sexType;
     }
 
-    id: number;
+    patientId: number;
     firstName: string;
     secondName: string;
-    middleName: string;
-    age: number;
-    gender: string;
-    image: string;
+    birthDate: Date;
+    sexType: sexType;
 }
