@@ -30,6 +30,7 @@ namespace OntologyMain.Api.StateMachine
     None = 0,
     Wheezing = 1,
     Hospitalize = 2,
-    Pef = 3
+    Pef = 3,
+    SpO2 = 4
   }
 }
