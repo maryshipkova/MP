@@ -24,7 +24,7 @@ namespace OntologyMain.Api.StateMachine
 
     public bool IsAnyChanged()
     {
-      if (!Signs.Any() || PreviousStatus is FirsStatus || !PreviousStatus.Signs.Any()) return false;
+      if (!Signs.Any() || PreviousStatus is VoidStatus || !PreviousStatus.Signs.Any()) return false;
       var currentSigns = Signs;
       var previousSigns = PreviousStatus.Signs;
       foreach (var currentSign in currentSigns)
@@ -38,7 +38,7 @@ namespace OntologyMain.Api.StateMachine
     public bool IsSignChanged(Sign sign)
     {
       if (!Signs.TryGetValue(sign.SignType, out Sign currentSign)) return false;
-      if (PreviousStatus is FirsStatus ||
+      if (PreviousStatus is VoidStatus ||
           !PreviousStatus.Signs.TryGetValue(sign.SignType, out Sign previousSign)) return false;
 
       return currentSign.IsTheSameIntensity(previousSign);
@@ -48,7 +48,7 @@ namespace OntologyMain.Api.StateMachine
     public TimeSpan ElapsedTime(DateTime endTime) => StartTime.Subtract(DateTime.UtcNow);
   }
 
-  public sealed class FirsStatus : Status
+  public sealed class VoidStatus : Status
   {
   }
 }
