@@ -19,15 +19,15 @@
   {
     Base = 0,
     Initial = 1,
-    State2 = 2,
-    State3 = 3,
-    State4 = 4,
-    State5 = 5,
-    State6 = 6,
-    State7 = 7,
-    State8 = 8,
-    State9 = 9,
-    State10 = 10,
-    End = 100
+    End = 2,
+    State2 = 3,
+    State3 = 4,
+    State4 = 5,
+    State5 = 6,
+    State6 = 7,
+    State7 = 8,
+    State8 = 9,
+    State9 = 10,
+    State10 = 11
   }
 }
