@@ -1,10 +1,10 @@
 ﻿namespace OntologyMain.Api.StateMachine.States
 {
-  public class State5 : BaseState
+  public class State10 : BaseState
   {
-    public State5()
+    public State10()
     {
-      StateType = StateType.State5;
+      StateType = StateType.State10;
     }
 
     public override StateType NextState(Status status)

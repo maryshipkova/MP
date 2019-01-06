@@ -1,17 +1,27 @@
-﻿namespace OntologyMain.Api.StateMachine.States
+﻿using System;
+using System.Collections.Generic;
+
+namespace OntologyMain.Api.StateMachine.States
 {
   public class State7 : BaseState
   {
-    public State7(Patient patient) : base(patient)
+    public State7()
     {
-      Description = "Госпитализация.";
-
-      Patient.MachineState = MachineState.State7;
+      StateType = StateType.State7;
     }
 
-    public override BaseState NextState()
+    public override StateType NextState(Status status)
     {
-      return new EndState(Patient);
+      var pef = status.Signs.GetValueOrDefault(SignType.Pef).Intensity;
+      var spO2 = status.Signs.GetValueOrDefault(SignType.SpO2).Intensity;
+
+      if (status.ElapsedTime() < SignConstants.MaxTime && !status.IsAnyChanged()) return StateType;
+
+      if (pef > 0.5 && pef < 0.7 && spO2 < 0.9) return StateType.State9;
+
+      if (status.ElapsedTime() >= SignConstants.MaxTime && !status.IsAnyChanged()) return StateType.State10;
+
+      throw new Exception($"{nameof(State4)}.{nameof(NextState)}: This is no other condition to transit.");
     }
   }
 }

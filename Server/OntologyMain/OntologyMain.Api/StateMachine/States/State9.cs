@@ -2,16 +2,14 @@
 {
   public class State9 : BaseState
   {
-    public State9(Patient patient) : base(patient)
+    public State9()
     {
-      Description = "Перевод в ОРИТ.";
-
-      Patient.MachineState = MachineState.State9;
+      StateType = StateType.State9;
     }
 
-    public override BaseState NextState()
+    public override StateType NextState(Status status)
     {
-      return new EndState(Patient);
+      return StateType.End;
     }
   }
 }

@@ -1,58 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-
-namespace OntologyMain.Api.StateMachine.States
+﻿namespace OntologyMain.Api.StateMachine.States
 {
   public abstract class BaseState
   {
-    public Guid Guid { get; } = Guid.NewGuid();
-    public List<MedicineType> Medicines = new List<MedicineType>();
-    public string Description { get; set; } = string.Empty;
-    public Patient Patient { get; set; }
-    public ILogger<BaseState> Logger { get; set; }
-    public BaseState PreviousState { get; set; }
-    public MachineState MachineState { get; set; }
+    public StateType StateType { get; set; } = StateType.Base;
 
-    public BaseState(Patient patient)
+    public virtual StateType NextState(Status status)
     {
-      Patient = patient;
-    }
-
-    public BaseState(BaseState state)
-    {
-      PreviousState = state;
-    }
-
-
-    public virtual BaseState NextState()
-    {
-      Logger.LogError($"{nameof(BaseState)}.{nameof(NextState)}. Override this method to call it.");
-      return this;
+      return StateType;
     }
 
     public override string ToString()
     {
-      return $"Guid: {Guid}; "+
-        $"State: {MachineState}; "+
-        $"Description: {Description}; "+
-        $"Medicines: [{string.Join(", ", Medicines)}]";
+      return $"State: {StateType};";
     }
-
   }
 
-  public enum MachineState
+  public enum StateType
   {
-    Initial = 0,
-    State1 = 1,
-    State2 = 2,
-    State3 = 3,
-    State4 = 4,
-    State5 = 5,
-    State6 = 6,
-    State7 = 7,
-    State8 = 8,
-    State9 = 9,
-    End = 100
+    Base = 0,
+    Initial = 1,
+    End = 2,
+    State2 = 3,
+    State3 = 4,
+    State4 = 5,
+    State5 = 6,
+    State6 = 7,
+    State7 = 8,
+    State8 = 9,
+    State9 = 10,
+    State10 = 11
   }
 }
