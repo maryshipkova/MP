@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OntologyMain.Api
+namespace OntologyMain.Api.StateMachine
 {
   public class SignConstants
   {
