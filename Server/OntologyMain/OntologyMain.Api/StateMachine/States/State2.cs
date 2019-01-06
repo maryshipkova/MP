@@ -2,19 +2,14 @@
 {
   public class State2 : BaseState
   {
-    public State2(Patient patient) : base(patient)
+    public State2()
     {
-      Description = "Предложить госпитализацию";
-
-      Patient.MachineState = MachineState.State2;
+      StateType = StateType.State2;
     }
 
-    public override BaseState NextState()
+    public override StateType NextState(Status status)
     {
-      if (Patient.Status.Signs.ContainsKey(SignType.Hospitalize))
-        return new State5(Patient);
-
-      return new State6(Patient);
+      return status.IsAnyChanged() ? StateType : StateType.State5;
     }
   }
 }
