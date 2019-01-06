@@ -16,8 +16,8 @@ namespace OntologyMain.Api.StateMachine.States
 
     public override BaseState NextState()
     {
-      var pef = Patient.Status.Signs.GetValueOrDefault(Indicator.Pef).Intensity;
-      var spO2 = Patient.Status.Signs.GetValueOrDefault(Indicator.SpO2).Intensity;
+      var pef = Patient.Status.Signs.GetValueOrDefault(SignType.Pef).Intensity;
+      var spO2 = Patient.Status.Signs.GetValueOrDefault(SignType.SpO2).Intensity;
 
       if (Patient.Status.ElapsedTime() < SignConstants.MaxTime && !Patient.Status.IsAnyChanged()) return this;
       if (pef > 0.5 && pef < 0.7 && spO2 < 0.9) return new State8(Patient);

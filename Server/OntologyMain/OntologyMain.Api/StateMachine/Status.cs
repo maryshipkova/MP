@@ -6,7 +6,7 @@ namespace OntologyMain.Api.StateMachine
 {
   public class Status
   {
-    public Dictionary<Indicator, Sign> Signs = new Dictionary<Indicator, Sign>();
+    public Dictionary<SignType, Sign> Signs = new Dictionary<SignType, Sign>();
     public Status PreviousStatus { get; }
     public DateTime StartTime { get; } = DateTime.UtcNow;
     public DateTime EndTime { get; private set; } = DateTime.MinValue;
@@ -18,8 +18,7 @@ namespace OntologyMain.Api.StateMachine
 
     public Status(Status previousStatus)
     {
-      PreviousStatus = previousStatus ??
-                       throw new ArgumentNullException($"{nameof(Status)}.ctor: {nameof(previousStatus)} is null.");
+      PreviousStatus = previousStatus ?? throw new ArgumentNullException($"{nameof(Status)}.ctor: {nameof(previousStatus)} is null.");
       PreviousStatus.EndTime = DateTime.UtcNow;
     }
 
@@ -38,9 +37,9 @@ namespace OntologyMain.Api.StateMachine
 
     public bool IsSignChanged(Sign sign)
     {
-      if (!Signs.TryGetValue(sign.Indicator, out Sign currentSign)) return false;
+      if (!Signs.TryGetValue(sign.SignType, out Sign currentSign)) return false;
       if (PreviousStatus is FirsStatus ||
-          !PreviousStatus.Signs.TryGetValue(sign.Indicator, out Sign previousSign)) return false;
+          !PreviousStatus.Signs.TryGetValue(sign.SignType, out Sign previousSign)) return false;
 
       return currentSign.IsTheSameIntensity(previousSign);
     }

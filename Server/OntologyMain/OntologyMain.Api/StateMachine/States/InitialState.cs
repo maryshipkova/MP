@@ -14,8 +14,8 @@ namespace OntologyMain.Api.StateMachine.States
     {
       if (!Patient.Status.IsAnyChanged()) return this;
 
-      var pef = Patient.Status.Signs.GetValueOrDefault(Indicator.Pef);
-      var wheezing = Patient.Status.Signs.GetValueOrDefault(Indicator.Wheezing);
+      var pef = Patient.Status.Signs.GetValueOrDefault(SignType.Pef);
+      var wheezing = Patient.Status.Signs.GetValueOrDefault(SignType.Wheezing);
 
       if (pef == null) return this;
 

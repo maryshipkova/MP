@@ -11,7 +11,7 @@
 
     public override BaseState NextState()
     {
-      if (Patient.Status.Signs.ContainsKey(Indicator.Hospitalize))
+      if (Patient.Status.Signs.ContainsKey(SignType.Hospitalize))
         return new State5(Patient);
 
       return new State6(Patient);

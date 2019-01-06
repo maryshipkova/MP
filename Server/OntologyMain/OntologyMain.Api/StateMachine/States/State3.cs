@@ -15,8 +15,8 @@ namespace OntologyMain.Api.StateMachine.States
 
     public override BaseState NextState()
     {
-      var pef = Patient.Status.Signs.GetValueOrDefault(Indicator.Pef).Intensity;
-      var isWheezing = Patient.Status.Signs.GetValueOrDefault(Indicator.Wheezing) != null;
+      var pef = Patient.Status.Signs.GetValueOrDefault(SignType.Pef).Intensity;
+      var isWheezing = Patient.Status.Signs.GetValueOrDefault(SignType.Wheezing) != null;
 
       if (pef > 0.6 && pef < 0.8 && isWheezing)
         return new State2(Patient);
