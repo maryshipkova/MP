@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using OntologyMain.Api.Controllers;
 
-namespace OntologyMain.Api.StateMachine
+namespace OntologyMain.Api.StateMachine.States
 {
   public abstract class BaseState
   {
