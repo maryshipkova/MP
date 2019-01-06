@@ -15,5 +15,7 @@ namespace OntologyMain.Data.Entities
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
     public SexType SexType { get; set; }
+    public int StatusId { get; set; }
+    public int StateId { get; set; }
   }
 }
