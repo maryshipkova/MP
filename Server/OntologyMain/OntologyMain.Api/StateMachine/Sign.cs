@@ -4,13 +4,12 @@ namespace OntologyMain.Api.StateMachine
 {
   public class Sign
   {
-    public DateTime StartTime { get; } = DateTime.UtcNow;
-    public Indicator Indicator { get; }
+    public SignType SignType { get; }
     public float Intensity { get; }
 
-    public Sign(Indicator indicator, float intensity)
+    public Sign(SignType signType, float intensity)
     {
-      Indicator = indicator;
+      SignType = signType;
       Intensity = intensity;
     }
 
@@ -23,14 +22,5 @@ namespace OntologyMain.Api.StateMachine
     {
       return Math.Abs(Intensity - otherSign.Intensity) > tolerance;
     }
-  }
-
-  public enum Indicator
-  {
-    None = 0,
-    Wheezing = 1,
-    Hospitalize = 2,
-    Pef = 3,
-    SpO2 = 4
   }
 }

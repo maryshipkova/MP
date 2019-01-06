@@ -1,4 +1,7 @@
-﻿namespace OntologyMain.Api.StateMachine
+﻿using System.Collections.Generic;
+using CommonLibraries;
+
+namespace OntologyMain.Api.StateMachine
 {
   public class MedicineType : Type
   {
@@ -12,29 +15,24 @@
     public static MedicineType MEDID008 = (MedicineType)new Type(8, "MEDID008", "Системные кортикостероиды, если нет ответа на лечение или больной недавно принимал стероиды");
     public static MedicineType MEDID009 = (MedicineType)new Type(9, "MEDID009", "Кортикостероиды внутривенно (преднизолон 90 мг, солюкортеф 100-200 мг)");
     public static MedicineType MEDID010 = (MedicineType)new Type(10, "MEDID010", "Эуфиллин внутривенно");
-  }
 
-  public class Type
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-
-    protected Type()
+    public static List<MedicineType> GetList()
     {
-    }
-
-    public Type(int id, string description)
-    {
-      Id = id;
-      Description = description;
-    }
-
-    public Type(int id, string name, string description)
-    {
-      Id = id;
-      Name = name;
-      Description = description;
+      return new List<MedicineType>
+      {
+        MEDID001,
+        MEDID002,
+        MEDID003,
+        MEDID004,
+        MEDID005,
+        MEDID006,
+        MEDID007,
+        MEDID008,
+        MEDID009,
+        MEDID010
+      };
     }
   }
+
+  
 }
