@@ -2,15 +2,14 @@
 {
   public class EndState : BaseState
   {
-    public EndState(Patient patient) : base(patient)
+    public EndState()
     {
-      Description = "Конечное состояние";
-      Patient.MachineState = MachineState.End;
+      StateType = StateType.End;
     }
 
-    public override BaseState NextState()
+    public override StateType NextState(Status status)
     {
-      return this;
+      return StateType;
     }
   }
 }
