@@ -5,27 +5,27 @@ namespace OntologyMain.Api.StateMachine.States
 {
   public class InitialState : BaseState
   {
-    public InitialState(Patient patient) : base(patient)
+    public InitialState()
     {
-      Description = "Начальное состояние";
+      StateType = StateType.Initial;
     }
 
-    public override BaseState NextState()
+    public override StateType NextState(Status status)
     {
-      if (!Patient.Status.IsAnyChanged()) return this;
+      if (!status.IsAnyChanged()) return StateType;
 
-      var pef = Patient.Status.Signs.GetValueOrDefault(SignType.Pef);
-      var wheezing = Patient.Status.Signs.GetValueOrDefault(SignType.Wheezing);
+      var pef = status.Signs.GetValueOrDefault(SignType.Pef);
+      var wheezing = status.Signs.GetValueOrDefault(SignType.Wheezing);
 
-      if (pef == null) return this;
+      if (pef == null) return StateType;
 
-      if (pef.Intensity > 0.8 && wheezing == null && Patient.Status.StartTime.Subtract(DateTime.UtcNow).TotalHours >= 5)
-        return new State1(Patient);
+      if (pef.Intensity > 0.8 && wheezing == null && status.StartTime.Subtract(DateTime.UtcNow).TotalHours >= 5)
+        return StateType.State2;
 
-      if (pef.Intensity < 0.6 && wheezing != null) return new State2(Patient);
+      if (pef.Intensity < 0.6 && wheezing != null) return StateType.State3;
 
-      if (pef.Intensity < 0.6) return new State3(Patient);
-      throw new Exception($"{nameof(State3)}.{nameof(NextState)}: This is no other condition to transit.");
+      if (pef.Intensity < 0.6) return StateType.State4;
+      throw new Exception($"{nameof(State4)}.{nameof(NextState)}: This is no other condition to transit.");
     }
   }
 }
