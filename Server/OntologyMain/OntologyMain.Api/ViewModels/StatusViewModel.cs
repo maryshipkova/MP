@@ -6,10 +6,10 @@ namespace OntologyMain.Api.ViewModels
   public class StatusViewModel
   {
     public int StatusId { get; set; }
-    public IEnumerable<SignViewModel> Signs { get; set; }
-    public string Description { get; set; }
-    public IEnumerable<TypeViewModel> Medicines { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public IEnumerable<SignViewModel> Signs { get; set; } = new List<SignViewModel>();
+    public string Description { get; set; } = string.Empty;
+    public IEnumerable<TypeViewModel> Medicines { get; set; } = new List<TypeViewModel>();
+    public TypeViewModel PatientState { get; set; }
+    public DateTime CreatedDate { get; set; }
   }
 }

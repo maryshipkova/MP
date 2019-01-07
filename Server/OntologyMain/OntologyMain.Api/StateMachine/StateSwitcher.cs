@@ -1,9 +1,10 @@
-﻿using CommonLibraries.CommonTypes;
+﻿using System;
+using CommonLibraries.CommonTypes;
 using OntologyMain.Api.StateMachine.States;
 
 namespace OntologyMain.Api.StateMachine
 {
-  public class StateMachine
+  public class StateSwitcher
   {
     public InitialState InitialState { get; set; } = new InitialState();
     public EndState EndState { get; set; } = new EndState();
@@ -20,7 +21,17 @@ namespace OntologyMain.Api.StateMachine
     public BaseState Switch(StateType stateType)
     {
       if (stateType == StateType.Initial) return InitialState;
-      return EndState;
+      if (stateType == StateType.End) return EndState;
+      if (stateType == StateType.State2) return State2;
+      if (stateType == StateType.State3) return State3;
+      if (stateType == StateType.State4) return State4;
+      if (stateType == StateType.State5) return State5;
+      if (stateType == StateType.State6) return State6;
+      if (stateType == StateType.State7) return State7;
+      if (stateType == StateType.State8) return State8;
+      if (stateType == StateType.State9) return State9;
+      if (stateType == StateType.State10) return State10;
+      throw new ArgumentOutOfRangeException($"There is no such state: {stateType.Id} {stateType.Name}");
     }
   }
 }

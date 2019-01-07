@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OntologyMain.Api.Services;
+using OntologyMain.Api.StateMachine;
 using OntologyMain.Data;
 using OntologyMain.Data.Repositories;
 
@@ -31,8 +33,9 @@ namespace OntologyMain.Api
         options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
       });
       services.AddDbContext<OntologyMainContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OntologyMainConnection")));
-      services.AddTransient<OntologyRepository>();
       services.AddTransient<PatientsRepository>();
+      services.AddTransient<PatientService>();
+      services.AddSingleton<StateSwitcher>();
       services.AddOptions();
       services.Configure<ServersSettings>(Configuration.GetSection("ServersSettings"));
     }

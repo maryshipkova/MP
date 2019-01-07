@@ -9,7 +9,7 @@ namespace OntologyMain.Api.Services
     public string Description { get; set; } = string.Empty;
     public List<MedicineType> Medicines { get; set; } = new List<MedicineType>();
 
-    public static StateContext ProcessState(StateType type)
+    public static StateContext FromState(StateType type)
     {
       if (type == StateType.Initial) return new StateContext {Description = "Начальное состояние"};
       if (type == StateType.State2)

@@ -10,6 +10,7 @@ namespace OntologyMain.Data.Dtos
   public class StatusDto
   {
     public int StatusId { get; set; }
+    public int PreviousStatusId { get; set; }
     public IEnumerable<SignDto> Signs { get; set; }
     public DateTime CreatedDate { get; set; }
 
@@ -18,6 +19,7 @@ namespace OntologyMain.Data.Dtos
       var result = new StatusDto
       {
         StatusId = statusEntity.StatusId,
+        PreviousStatusId = statusEntity.PreviousStatusId,
         Signs = signs.Select(x => new SignDto
         {
           SignId = x.SignId,
@@ -29,22 +31,5 @@ namespace OntologyMain.Data.Dtos
 
       return result;
     }
-
-    //public static (StatusEntity, IEnumerable<SignEntity>) ToEntity(int patientId, int previousStatusId, StatusDto status)
-    //{
-    //  var newStatus = new StatusEntity
-    //  {
-    //    PatientId = patientId,
-    //    PreviousStatusId = previousStatusId,
-    //    CreatedDate = status.CreatedDate,
-    //  };
-
-    //  var newSigns = status.Signs.Select(x => new SignEntity
-    //  {
-    //    StatusId = newStatus.StatusId,
-    //    SignTypeId = x.SignType.Id,
-    //    Intensity = x.Intensity
-    //  }).ToList();
-    //}
   }
 }

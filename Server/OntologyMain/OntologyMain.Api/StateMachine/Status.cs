@@ -2,30 +2,56 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommonLibraries.CommonTypes;
+using OntologyMain.Data.Dtos;
 
 namespace OntologyMain.Api.StateMachine
 {
   public class Status
   {
     public int StatusId { get; set; }
-    public Dictionary<SignType, Sign> Signs = new Dictionary<SignType, Sign>();
-    public Status PreviousStatus { get; }
-    public DateTime StartTime { get; } = DateTime.UtcNow;
-    public DateTime EndTime { get; private set; } = DateTime.MinValue;
+    public Dictionary<SignType, Sign> Signs { get; private set; }
+    public Status PreviousStatus { get; private set; }
+    public DateTime StartDate { get; private set; } 
+    public DateTime EndDate { get; private set; } 
 
     protected Status()
     {
-      PreviousStatus = null;
+   
     }
 
-    public Status(Status previousStatus)
+
+    public static Status CreateStatus(StatusDto previousStatusDto, StatusDto newStatusDto)
     {
-      PreviousStatus = previousStatus ?? throw new ArgumentNullException($"{nameof(Status)}.ctor: {nameof(previousStatus)} is null.");
-      PreviousStatus.EndTime = DateTime.UtcNow;
+      var result = new Status
+      {
+        StartDate = newStatusDto.CreatedDate,
+        EndDate = DateTime.UtcNow,
+        StatusId = newStatusDto.StatusId,
+        Signs = new Dictionary<SignType, Sign>()
+      };
+
+      foreach (var signDto in newStatusDto.Signs)
+      {
+        result.Signs.Add(signDto.SignType, new Sign(signDto.SignId, signDto.SignType, signDto.Intensity) );
+      }
+
+      result.PreviousStatus = previousStatusDto.StatusId == newStatusDto.StatusId ? new VoidStatus() : new Status();
+
+      result.PreviousStatus.StartDate = previousStatusDto.CreatedDate;
+      result.PreviousStatus.EndDate = newStatusDto.CreatedDate;
+      result.PreviousStatus.StatusId = previousStatusDto.StatusId;
+      result.PreviousStatus.Signs = new Dictionary<SignType, Sign>();
+      foreach (var signDto in newStatusDto.Signs)
+      {
+        result.PreviousStatus.Signs.Add(signDto.SignType, new Sign(signDto.SignId, signDto.SignType, signDto.Intensity));
+      }
+
+      return result;
     }
 
     public bool IsAnyChanged()
     {
+      if (PreviousStatus is VoidStatus) return true;
       if (!Signs.Any() || PreviousStatus is VoidStatus || !PreviousStatus.Signs.Any()) return false;
       var currentSigns = Signs;
       var previousSigns = PreviousStatus.Signs;
@@ -46,8 +72,10 @@ namespace OntologyMain.Api.StateMachine
       return currentSign.IsTheSameIntensity(previousSign);
     }
 
-    public TimeSpan ElapsedTime() => ElapsedTime(EndTime == DateTime.MinValue ? DateTime.UtcNow : EndTime);
-    public TimeSpan ElapsedTime(DateTime endTime) => StartTime.Subtract(DateTime.UtcNow);
+    public TimeSpan ElapsedTime() => ElapsedTime(EndDate == DateTime.MinValue ? DateTime.UtcNow : EndDate);
+    public TimeSpan ElapsedTime(DateTime endTime) => StartDate.Subtract(DateTime.UtcNow);
+
+    
   }
 
   public sealed class VoidStatus : Status

@@ -1,4 +1,6 @@
-﻿namespace OntologyMain.Api.StateMachine.States
+﻿using CommonLibraries.CommonTypes;
+
+namespace OntologyMain.Api.StateMachine.States
 {
   public class State9 : BaseState
   {
