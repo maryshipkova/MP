@@ -12,7 +12,6 @@ namespace OntologyMain.Data.Entities
     public int PatientId { get; set; }
 
     public int PreviousStatusId { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    public DateTime CreatedDate { get; set; }
   }
 }
