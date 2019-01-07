@@ -4,18 +4,22 @@ namespace CommonLibraries.CommonTypes
 {
   public class StateType : CustomEnum
   {
-    public static StateType Base = (StateType) new CustomEnum(0, "Base");
-    public static StateType Initial = (StateType) new CustomEnum(1, "Initial");
-    public static StateType End = (StateType) new CustomEnum(2, "End");
-    public static StateType State2 = (StateType) new CustomEnum(3, "State2");
-    public static StateType State3 = (StateType) new CustomEnum(4, "State3");
-    public static StateType State4 = (StateType) new CustomEnum(5, "State4");
-    public static StateType State5 = (StateType) new CustomEnum(6, "State5");
-    public static StateType State6 = (StateType) new CustomEnum(7, "State6");
-    public static StateType State7 = (StateType) new CustomEnum(8, "State7");
-    public static StateType State8 = (StateType) new CustomEnum(9, "State8");
-    public static StateType State9 = (StateType) new CustomEnum(10, "State9");
-    public static StateType State10 = (StateType) new CustomEnum(11, "State10");
+    public static StateType Base = new StateType(0, "Base");
+    public static StateType Initial = new StateType(1, "Initial");
+    public static StateType End = new StateType(2, "End");
+    public static StateType State2 = new StateType(3, "State2");
+    public static StateType State3 = new StateType(4, "State3");
+    public static StateType State4 = new StateType(5, "State4");
+    public static StateType State5 = new StateType(6, "State5");
+    public static StateType State6 = new StateType(7, "State6");
+    public static StateType State7 = new StateType(8, "State7");
+    public static StateType State8 = new StateType(9, "State8");
+    public static StateType State9 = new StateType(10, "State9");
+    public static StateType State10 = new StateType(11, "State10");
+
+    public StateType(int id, string name) : base(id, name, string.Empty)
+    {
+    }
 
     public static explicit operator StateType(int id)
     {
