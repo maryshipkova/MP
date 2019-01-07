@@ -1,4 +1,3 @@
-
 /* TIMELINE
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -16,7 +15,7 @@
     background: #fff;
 }
 
-.timeline ul li::after {
+.timeline ul li:not(:last-child)::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -72,7 +71,6 @@ time {
     margin-bottom: 8px;
 }
 
-
 .timeline ul li div:nth-child(2n+1) {
     position: relative;
     left: -470px !important;
@@ -98,7 +96,6 @@ time {
     border-width: 8px 0 8px 16px;
     border-color: transparent transparent transparent #F45B69;
 }
-
 
 /* EFFECTS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -131,7 +128,6 @@ time {
     opacity: 1;
 }
 
-
 /* GENERAL MEDIA QUERIES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -139,10 +135,12 @@ time {
     .timeline ul li div {
         width: 250px;
     }
+
     .timeline ul li:nth-child(even) div {
         left: -289px;
         /*250+45-6*/
     }
+
     .timeline ul li div:nth-child(2n+1) {
         left: -315px !important;
     }
@@ -155,4 +153,11 @@ time {
         left: -15px;
     }
 
+}
+
+.add-btn {
+    position: absolute;
+    transform: translateX(-50%);
+    min-width: 100px;
+    min-height: 25px;
 }

@@ -2,12 +2,55 @@
 
 import React from "react";
 import "./style.css";
+import {PatientTimeLineItem} from "../PatientTimeLineItem";
 
 
 export class PatientTimeLine extends React.Component {
     constructor() {
         super();
+        this.state = {
+            states: [
+                {
+                    leftSide: {
+                        id: 1,
+                        pef: 0.2,
+                        opf2: 0.3,
+                        isHospitalized: true,
+                        isWheezing: true,
+                        readOnly: true,
+                    },
+                    rightSide: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At\n" +
+                    "                vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium"
+                },
+                {
+                    leftSide: {
+                        id: 2,
+                        pef: 0.25,
+                        opf2: 0.38,
+                        isHospitalized: false,
+                        isWheezing: true,
+                        readOnly: true,
+                    },
+                    rightSide: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At\n" +
+                    "                vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium"
+                },
+                {
+                    leftSide: {
+                        id: 3,
+                        pef: 0.45,
+                        opf2: 0.88,
+                        isHospitalized: false,
+                        isWheezing: true,
+                        readOnly: true,
+                    },
+                    rightSide: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At\n" +
+                    "                vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium"
+                },
 
+            ],
+        };
+        this.addState = this.addState.bind(this);
+        this.nothingChanged = this.nothingChanged.bind(this);
     }
 
     componentDidMount() {
@@ -16,10 +59,10 @@ export class PatientTimeLine extends React.Component {
         function isElementInViewport(el) {
             let rect = el.getBoundingClientRect();
             return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                (rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth))
             );
         }
 
@@ -36,155 +79,52 @@ export class PatientTimeLine extends React.Component {
         window.addEventListener("scroll", showListItem);
     }
 
+    addState() {
+        let currentState = this.state.states.slice();
+        currentState.push({
+            leftSide: {
+                readOnly: false,
+            },
+            rightSide: "World"
+        });
+        this.setState({
+            states: currentState,
+        });
+    }
+
+    componentDidUpdate() {
+        this.button.scrollIntoView({behavior: "smooth"});
+    }
+
+    nothingChanged(listItemId) {
+        let states = this.state.states.slice();
+        for (let stateIndex in states) {
+            if (states[stateIndex].leftSide.id === listItemId) {
+                states[stateIndex] = states[stateIndex - 1];
+                this.setState({
+                    states
+                });
+                break;
+            }
+        }
+    }
 
     render() {
         return (
             <section className="timeline">
                 <ul ref={(ul) => this.list = ul}>
+                    {this.state.states.map(state => {
+                        return <PatientTimeLineItem
+                            {...state}
+                            key={state.id} />
+                    })}
                     <li>
-                        <div>
-                            <time>1934</time>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At
-                            vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                        </div>
-                        <div>
-                            <time>193444444</time>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At
-                            vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                        </div>
-
-                    </li>
-                    <li>
-                        <div>
-                            <time>1937</time>
-                            Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris
-                            et bibendum molestie. Aenean ex augue, varius et pulvinar in, pretium non nisi.
-                        </div>
-                        <div>
-                            <time>19377777</time>
-                            Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris
-                            et bibendum molestie. Aenean ex augue, varius et pulvinar in, pretium non nisi.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1940</time>
-                            Proin iaculis, nibh eget efficitur varius, libero tellus porta dolor, at pulvinar tortor ex
-                            eget ligula. Integer eu dapibus arcu, sit amet sollicitudin eros.
-                        </div>
-                        <div>
-                            <time>1940000000</time>
-                            Proin iaculis, nibh eget efficitur varius, libero tellus porta dolor, at pulvinar tortor ex
-                            eget ligula. Integer eu dapibus arcu, sit amet sollicitudin eros.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1943</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>194333333333</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1946</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>194666666666666</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1956</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>1956666666666666666</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1957</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>19577777777777</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1967</time>
-                            Aenean condimentum odio a bibendum rhoncus. Ut mauris felis, volutpat eget porta faucibus,
-                            euismod quis ante.
-                        </div>
-                        <div>
-                            <time>196777777777</time>
-                            Aenean condimentum odio a bibendum rhoncus. Ut mauris felis, volutpat eget porta faucibus,
-                            euismod quis ante.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1977</time>
-                            Vestibulum porttitor lorem sed pharetra dignissim. Nulla maximus, dui a tristique iaculis,
-                            quam dolor convallis enim, non dignissim ligula ipsum a turpis.
-                        </div>
-                        <div>
-                            <time>197777777777777</time>
-                            Vestibulum porttitor lorem sed pharetra dignissim. Nulla maximus, dui a tristique iaculis,
-                            quam dolor convallis enim, non dignissim ligula ipsum a turpis.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>1985</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>198555555555555</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>2000</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>20000000000</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <time>2005</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
-                        <div>
-                            <time>20055555555</time>
-                            In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat
-                            mattis. Vestibulum id magna est.
-                        </div>
+                        <button className="add-btn"
+                                onClick={this.addState}
+                                ref={button => this.button = button}
+                                >
+                            add state
+                        </button>
                     </li>
                 </ul>
             </section>
