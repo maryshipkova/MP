@@ -98,7 +98,46 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
-   
+    public async Task<StatusDto> GetPatientStatus(int patientId)
+    {
+      var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
+      var status = await Db.StatusEntities.FirstOrDefaultAsync(x => x.StatusId == patient.StatusId);
+      var signs = await Db.SignEntities.Where(x => x.StatusId == status.StatusId).ToListAsync();
+      var result = StatusDto.FromEntity(status, signs);
+      return result;
+    }
+
+    public async Task<StatusDto> AddStatusAsync(int patientId, IEnumerable<SignDto> signs)
+    {
+      var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
+
+      var newStatus = new StatusEntity
+      {
+        PatientId = patientId,
+        PreviousStatusId = patient.StatusId,
+        CreatedDate = DateTime.UtcNow
+      };
+
+      Db.StatusEntities.Add(newStatus);
+      Db.SaveChanges();
+
+      var newSigns = signs
+        .Select(x => new SignEntity
+        {
+          StatusId = newStatus.StatusId,
+          SignTypeId = x.SignType.Id,
+          Intensity = x.Intensity
+        }).ToList();
+
+      Db.SignEntities.AddRange(newSigns);
+      await Db.SaveChangesAsync();
+
+      patient.StatusId = newStatus.StatusId;
+      await Db.SaveChangesAsync();
+
+      var result = StatusDto.FromEntity(newStatus, newSigns);
+      return result;
+    }
 
     public async Task<StateDto> AddStateAsync(int patientId, StateType nextState)
     {
