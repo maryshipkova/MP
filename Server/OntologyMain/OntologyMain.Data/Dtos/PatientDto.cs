@@ -11,7 +11,7 @@ namespace OntologyMain.Data.Dtos
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
-    public SexType SexType { get; set; }
+    public GenderType GenderType { get; set; }
 
     public StateDto PatientState { get; set; }
     public StatusDto Status { get; set; }
@@ -24,7 +24,7 @@ namespace OntologyMain.Data.Dtos
         FirstName = patient.FirstName,
         LastName = patient.LastName,
         BirthDate = patient.BirthDate,
-        SexType = (SexType)patient.SexTypeId
+        GenderType = (GenderType)patient.GenderTypeId
       };
       return result;
     }
