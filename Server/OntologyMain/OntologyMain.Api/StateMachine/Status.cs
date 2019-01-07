@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine
 {
   public class Status
   {
+    public int StatusId { get; set; }
     public Dictionary<SignType, Sign> Signs = new Dictionary<SignType, Sign>();
     public Status PreviousStatus { get; }
     public DateTime StartTime { get; } = DateTime.UtcNow;

@@ -1,4 +1,5 @@
-﻿using OntologyMain.Api.StateMachine.States;
+﻿using CommonLibraries.CommonTypes;
+using OntologyMain.Api.StateMachine.States;
 
 namespace OntologyMain.Api.StateMachine
 {
@@ -15,5 +16,11 @@ namespace OntologyMain.Api.StateMachine
     public State8 State8 { get; set; } = new State8();
     public State9 State9 { get; set; } = new State9();
     public State10 State10 { get; set; } = new State10();
+
+    public BaseState Switch(StateType stateType)
+    {
+      if (stateType == StateType.Initial) return InitialState;
+      return EndState;
+    }
   }
 }

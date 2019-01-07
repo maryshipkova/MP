@@ -1,14 +1,17 @@
 ﻿using System;
+using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine
 {
   public class Sign
   {
+    public int SignId { get; }
     public SignType SignType { get; }
     public float Intensity { get; }
 
-    public Sign(SignType signType, float intensity)
+    public Sign(int signId, SignType signType, float intensity)
     {
+      SignId = signId;
       SignType = signType;
       Intensity = intensity;
     }

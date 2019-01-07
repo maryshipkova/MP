@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using CommonLibraries.CommonTypes;
 using CommonLibraries.Response;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OntologyMain.Api.StateMachine;
 using OntologyMain.Api.ViewModels;
-using OntologyMain.Data.Repositories;
 
 namespace OntologyMain.Api.Controllers
 {
@@ -13,57 +15,34 @@ namespace OntologyMain.Api.Controllers
   [ApiController]
   public class OntologyController : ControllerBase
   {
-    private OntologyRepository Db { get; }
     private ILogger<PatientsController> Logger { get; }
 
-    public OntologyController(ILogger<PatientsController> logger, OntologyRepository db)
+    public OntologyController(ILogger<PatientsController> logger)
     {
       Logger = logger;
-      Db = db;
     }
 
-    [HttpGet("symptoms")]
-    public async Task<IActionResult> GetSymptoms()
+    [HttpGet("indicators")]
+    public async Task<IActionResult> GetSigns()
     {
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSymptoms)}: Start.");
+      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: Start.");
 
-      var result = await Db.GetSymptoms();
+      var result = SignType.GetList().Select(x => new TypeViewModel {Id = x.Id, Name = x.Name});
 
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSymptoms)}: End.");
-      return new OkResponseResult("Symptoms", new {Symptoms = result});
+      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: End.");
+      return new OkResponseResult("Signs", new {Signs = result});
     }
 
-    [HttpPost("symptoms")]
-    public async Task<IActionResult> CreateSymptom([FromBody] CreateSymptomViewModel symptomViewModel)
+    [HttpGet("medicines")]
+    public async Task<IActionResult> GetMedicines()
     {
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateSymptom)}: Start.");
+      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetMedicines)}: Start.");
 
-      var newSymptom = await Db.CreateSymptom(symptomViewModel.Name, symptomViewModel.NormalIntensity);
+      var result = MedicineType.GetList()
+        .Select(x => new TypeViewModel {Id = x.Id, Name = x.Name, Description = x.Description});
 
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateSymptom)}: End.");
-      return new OkResponseResult("Symptom", new {Symptom = newSymptom});
-    }
-
-    [HttpGet("drugs")]
-    public async Task<IActionResult> GetDrugs()
-    {
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetDrugs)}: Start.");
-
-      var result = await Db.GetDrugs();
-
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetDrugs)}: End.");
-      return new OkResponseResult("Drugs", new {Drugs = result});
-    }
-
-    [HttpPost("drugs")]
-    public async Task<IActionResult> CreateDrug([FromBody] CreateDrugViewModel drugViewModel)
-    {
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateDrug)}: Start.");
-
-      var newDrug = await Db.CreateDrug(drugViewModel.Name);
-
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(CreateDrug)}: End.");
-      return new OkResponseResult("Drug", new {Drug = newDrug});
+      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetMedicines)}: End.");
+      return new OkResponseResult("Medicines", new {Medicines = result});
     }
   }
 }
