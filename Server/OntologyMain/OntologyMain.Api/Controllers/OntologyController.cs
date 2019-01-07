@@ -5,7 +5,6 @@ using CommonLibraries.Response;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OntologyMain.Api.StateMachine;
 using OntologyMain.Api.ViewModels;
 
 namespace OntologyMain.Api.Controllers
@@ -22,8 +21,8 @@ namespace OntologyMain.Api.Controllers
       Logger = logger;
     }
 
-    [HttpGet("indicators")]
-    public async Task<IActionResult> GetSigns()
+    [HttpGet("signs")]
+    public IActionResult GetSigns()
     {
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: Start.");
 
@@ -34,7 +33,7 @@ namespace OntologyMain.Api.Controllers
     }
 
     [HttpGet("medicines")]
-    public async Task<IActionResult> GetMedicines()
+    public IActionResult GetMedicines()
     {
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetMedicines)}: Start.");
 
