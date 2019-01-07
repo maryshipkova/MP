@@ -1,23 +1,22 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using CommonLibraries.CommonTypes;
+using OntologyMain.Data.Dtos;
+using OntologyMain.Data.Entities;
 
 namespace OntologyMain.Api.ViewModels
 {
   public class CreatePatientViewModel
   {
-    public int PatientId { get; set; }
+    [Required]
     public string FirstName { get; set; }
+    [Required]
     public string LastName { get; set; }
+    [Required]
     public DateTime BirthDate { get; set; }
-    public int SexType { get; set; }
-  }
-
-  public class ShortPatientViewModel
-  {
-    public int PatientId { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public DateTime BirthDate { get; set; }
-    public TypeViewModel SexType { get; set; }
+    [Required]
+    public int GenderType { get; set; }
   }
 
   public class PatientViewModel
@@ -26,7 +25,43 @@ namespace OntologyMain.Api.ViewModels
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
-    public TypeViewModel SexType { get; set; }
+    public TypeViewModel GenderType { get; set; }
+
+    public static PatientViewModel FromPatientEntity(PatientEntity patient)
+    {
+      var result = new PatientViewModel
+      {
+        PatientId = patient.PatientId,
+        BirthDate = patient.BirthDate,
+        FirstName = patient.FirstName,
+        LastName = patient.LastName,
+        GenderType = (GenderType)patient.GenderTypeId,
+      };
+      return result;
+    }
+  }
+
+  public class FullPatientViewModel : PatientViewModel
+  {
     public StatusViewModel Status { get; set; }
+
+    public static FullPatientViewModel FromPatientDto(PatientDto patient)
+    {
+      var result = new FullPatientViewModel
+      {
+        PatientId = patient.PatientId,
+        BirthDate = patient.BirthDate,
+        FirstName = patient.FirstName,
+        LastName = patient.LastName,
+        GenderType = patient.GenderType,
+        Status = new StatusViewModel
+        {
+          CreatedDate = patient.Status.CreatedDate,
+          StatusId = patient.Status.StatusId,
+          Signs = patient.Status.Signs.Select(x => new SignViewModel {SignType = x.SignType, Intensity = x.Intensity}).ToList()
+        }
+      };
+      return result;
+    }
   }
 }
