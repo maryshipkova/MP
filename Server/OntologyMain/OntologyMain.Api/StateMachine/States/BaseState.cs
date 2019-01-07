@@ -1,4 +1,5 @@
-﻿using CommonLibraries.CommonTypes;
+﻿using System;
+using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
 {
@@ -8,7 +9,7 @@ namespace OntologyMain.Api.StateMachine.States
 
     public virtual StateType NextState(Status status)
     {
-      return StateType;
+      throw new Exception ($"There is no way from BaseState.");
     }
 
     public override string ToString()
