@@ -4,7 +4,7 @@ using OntologyMain.Api.StateMachine.States;
 
 namespace OntologyMain.Api.StateMachine
 {
-  public class StateMachine
+  public class StateSwitcher
   {
     public InitialState InitialState { get; set; } = new InitialState();
     public EndState EndState { get; set; } = new EndState();
@@ -21,7 +21,7 @@ namespace OntologyMain.Api.StateMachine
     public BaseState Switch(StateType stateType)
     {
       if (stateType == StateType.Initial) return InitialState;
-      if (stateType == StateType.End) return InitialState;
+      if (stateType == StateType.End) return EndState;
       if (stateType == StateType.State2) return State2;
       if (stateType == StateType.State3) return State3;
       if (stateType == StateType.State4) return State4;
