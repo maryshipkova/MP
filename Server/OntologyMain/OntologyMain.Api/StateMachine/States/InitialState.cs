@@ -20,7 +20,7 @@ namespace OntologyMain.Api.StateMachine.States
 
       if (pef == null) return StateType;
 
-      if (pef.Intensity > 0.8 && wheezing == null && status.StartTime.Subtract(DateTime.UtcNow).TotalHours >= 5)
+      if (pef.Intensity > 0.8 && wheezing == null && status.ElapsedTime().TotalHours >= 5)
         return StateType.State2;
 
       if (pef.Intensity < 0.6 && wheezing != null) return StateType.State3;
