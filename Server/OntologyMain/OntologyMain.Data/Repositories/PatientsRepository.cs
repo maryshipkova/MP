@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
 using Microsoft.EntityFrameworkCore;
+using OntologyMain.Data.Dtos;
 using OntologyMain.Data.Entities;
 
 namespace OntologyMain.Data.Repositories
@@ -17,19 +18,12 @@ namespace OntologyMain.Data.Repositories
       Db = db;
     }
 
-    public enum ItemType
+    public async Task<bool> IsPatientExistAsync(int patientId)
     {
-      None = 0,
-      Status = 1,
-      State = 2
+      return await Db.PatientEntities.AnyAsync(x => x.PatientId == patientId);
     }
 
-    public bool IsPatientExist(int patientId)
-    {
-      return Db.PatientEntities.Any(x => x.PatientId == patientId);
-    }
-
-    public async Task<PatientEntity> CreatePatient(string firstName, string lastName, DateTime birthDate,
+    public async Task<PatientDto> CreatePatientAsync(string firstName, string lastName, DateTime birthDate,
       SexType sexType)
     {
       var newPatient = new PatientEntity
@@ -37,60 +31,82 @@ namespace OntologyMain.Data.Repositories
         FirstName = firstName,
         LastName = lastName,
         BirthDate = birthDate,
-        SexType = sexType
+        SexTypeId = sexType.Id
       };
       Db.PatientEntities.Add(newPatient);
       await Db.SaveChangesAsync();
-      return newPatient;
+
+      var newStatus = new StatusEntity
+      {
+        CreatedDate = DateTime.UtcNow,
+        PatientId = newPatient.PatientId,
+        PreviousStatusId = 0
+      };
+      Db.StatusEntities.Add(newStatus);
+      await Db.SaveChangesAsync();
+      newStatus.PreviousStatusId = newStatus.StatusId;
+      await Db.SaveChangesAsync();
+
+      var newState = new StateEntity
+      {
+        CreatedDate = DateTime.UtcNow,
+        PatientId = newPatient.PatientId, 
+         StatusId = newStatus.StatusId,
+          PreviousStateId = 0,
+           StateTypeId = StateType.Base.Id
+      };
+      Db.StateEntities.Add(newState);
+      await Db.SaveChangesAsync();
+      newState.PreviousStateId = newState.StatusId;
+      await Db.SaveChangesAsync();
+
+      newPatient.StatusId = newStatus.StatusId;
+      newPatient.StateId = newState.StateId;
+
+      await Db.SaveChangesAsync();
+
+      var result = PatientDto.FromEntity(newPatient);
+      result.Status = StatusDto.FromEntity(newStatus, new List<SignEntity>());
+      result.PatientState = StateDto.FromEntity(newState);
+
+      return result;
     }
 
-    public async Task<List<PatientEntity>> GetPatients()
+    public async Task<List<PatientEntity>> GetPatientsAsync()
     {
       return await Db.PatientEntities.ToListAsync();
     }
 
-    public async Task<PatientEntity> GetPatient(int patientId)
-    {
-      return await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
-    }
-
-    public async Task AddStatus(StatusEntity status, IEnumerable<SignEntity> signs)
-    {
-      Db.StatusEntities.Add(status);
-      Db.SaveChanges();
-      var signEntities = signs as IList<SignEntity> ?? signs.ToList();
-      foreach (var signEntity in signEntities) signEntity.StatusId = status.StatusId;
-      Db.SignEntities.AddRange(signEntities);
-      await Db.SaveChangesAsync();
-
-      await UpdateStateStatusId(status.PatientId, status.StatusId, ItemType.Status);
-    }
-
-    public async Task AddState(StateEntity state)
-    {
-      Db.StateEntities.Add(state);
-      await Db.SaveChangesAsync();
-
-      await UpdateStateStatusId(state.PatientId, state.StateId, ItemType.State);
-    }
-
-    public async Task UpdateStateStatusId(int patientId, int itemId, ItemType type)
+    public async Task<PatientDto> GetPatientAsync(int patientId)
     {
       var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
-      if (type == ItemType.None || patient == null) return;
+      var state = await Db.StateEntities.FirstOrDefaultAsync(x => x.StateId == patient.StateId);
+      var status = await Db.StatusEntities.FirstOrDefaultAsync(x => x.StatusId == patient.StatusId);
+      var signs = await Db.SignEntities.Where(x => x.StatusId == status.StatusId).ToListAsync();
+      var result = PatientDto.FromEntity(patient);
+      result.Status = StatusDto.FromEntity(status, signs);
+      result.PatientState = StateDto.FromEntity(state);
 
-      switch (type)
-      {
-        case ItemType.Status:
-          patient.StatusId = itemId;
-          break;
-        case ItemType.State:
-          patient.StateId = itemId;
-          break;
-      }
-      await Db.SaveChangesAsync();
+      return result;
     }
-    //    PatientIntensity = patientDiagnosisIntensity,
+
+    public async Task<StateDto> GetPatientState(int patientId)
+    {
+      var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
+      var state = await Db.StateEntities.FirstOrDefaultAsync(x => x.StateId == patient.StateId);
+      var result = StateDto.FromEntity(state);
+      return result;
+    }
+
+    public async Task<StatusDto> GetPatientStatus(int patientId)
+    {
+      var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
+      var status = await Db.StatusEntities.FirstOrDefaultAsync(x => x.StatusId == patient.StatusId);
+      var signs = await Db.SignEntities.Where(x => x.StatusId == status.StatusId).ToListAsync();
+      var result = StatusDto.FromEntity(status, signs);
+      return result;
+    }
+
     //    SymptomId = symptomId,
     //    PatientId = patientId,
     //  {
@@ -103,11 +119,14 @@ namespace OntologyMain.Data.Repositories
 
     //public async Task<DiagnosisDto> AddPatientDiagnosis(int patientId, float patientDiagnosisIntensity, int symptomId, List<(int DrugId, float Dosage)> drugs)
     //    UpdatedDate = DateTime.UtcNow
+
     //  };
 
     //  Db.DiagnosisEntities.Add(diagnosis);
 
     //  await Db.SaveChangesAsync();
+
+    //    PatientIntensity = patientDiagnosisIntensity,
 
     //  var diagnosisDrugs = drugsDtos.Select(x => new DiagnosisDrugEntity { DiagnosisId = diagnosis.DiagnosisId, Dosage = x.Dosage, DrugId = x.DrugId}).ToList();
     //  Db.DiagnosisDrugEntities.AddRange(diagnosisDrugs);
