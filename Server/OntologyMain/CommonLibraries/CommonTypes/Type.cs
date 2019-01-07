@@ -1,22 +1,22 @@
-﻿namespace CommonLibraries
+﻿namespace CommonLibraries.CommonTypes
 {
-  public class Type
+  public class CustomEnum
   {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
 
-    protected Type()
+    protected CustomEnum()
     {
     }
 
-    public Type(int id, string description)
+    public CustomEnum(int id, string description)
     {
       Id = id;
       Description = description;
     }
 
-    public Type(int id, string name, string description)
+    public CustomEnum(int id, string name, string description)
     {
       Id = id;
       Name = name;

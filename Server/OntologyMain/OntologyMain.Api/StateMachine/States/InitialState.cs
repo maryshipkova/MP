@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
 {
