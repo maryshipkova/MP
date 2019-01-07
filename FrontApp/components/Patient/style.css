@@ -1,0 +1,13 @@
+.patient {
+    display: flex;
+    flex-direction: row;
+}
+
+.photo {
+    width:100px;
+    height:100px;
+}
+
+.nameAgeGender{
+    margin-left: 10px;
+}
