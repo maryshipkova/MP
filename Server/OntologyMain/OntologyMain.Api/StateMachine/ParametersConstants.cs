@@ -2,7 +2,7 @@
 
 namespace OntologyMain.Api.StateMachine
 {
-  public class SignConstants
+  public class ParametersConstants
   {
     public static TimeSpan MaxTime = TimeSpan.FromDays(5);
   }

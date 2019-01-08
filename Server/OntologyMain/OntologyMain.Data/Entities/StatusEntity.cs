@@ -10,8 +10,11 @@ namespace OntologyMain.Data.Entities
     [Key]
     public int StatusId { get; set; }
     public int PatientId { get; set; }
-
     public int PreviousStatusId { get; set; }
+    public bool IsWheezing { get; set; }
+    public bool IsHospitalized { get; set; }
+    public float Pef { get; set; }
+    public float SpO2 { get; set; }
     public DateTime CreatedDate { get; set; }
   }
 }

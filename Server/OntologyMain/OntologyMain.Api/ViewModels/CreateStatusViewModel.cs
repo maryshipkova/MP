@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
+using OntologyMain.Data.Dtos;
 
 namespace OntologyMain.Api.ViewModels
 {
   public class CreateStatusViewModel
   {
-    public IEnumerable<AddSignViewModel> Signs { get; set; }
-  }
-
-  public class AddSignViewModel
-  {
-    public int SignTypeId { get; set; }
-    public float Intensity { get; set; }
+    public ParametersDto Parameters { get; set; }
   }
 }

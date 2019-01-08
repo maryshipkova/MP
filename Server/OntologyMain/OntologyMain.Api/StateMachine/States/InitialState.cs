@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
@@ -15,18 +14,17 @@ namespace OntologyMain.Api.StateMachine.States
     {
       if (!status.IsAnyChanged()) return StateType;
 
-      var pef = status.Signs.GetValueOrDefault(SignType.Pef);
-      var wheezing = status.Signs.GetValueOrDefault(SignType.Wheezing);
+      var pef = status.Parameters.Pef;
+      var isWheezing = status.Parameters.IsWheezing;
 
-      if (pef == null) return StateType;
-
-      if (pef.Intensity > 0.8 && wheezing == null && status.ElapsedTime().TotalHours >= 5)
+      if (pef > 0.8 && !isWheezing && status.ElapsedTime().TotalHours >= 5)
         return StateType.State2;
 
-      if (pef.Intensity < 0.6 && wheezing != null) return StateType.State3;
+      if (pef < 0.6 && isWheezing) return StateType.State3;
 
-      if (pef.Intensity < 0.6) return StateType.State4;
-      throw new Exception($"{nameof(State4)}.{nameof(NextState)}: This is no other condition to transit.");
+      if (pef < 0.6) return StateType.State4;
+
+      return StateType;
     }
   }
 }

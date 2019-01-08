@@ -8,7 +8,6 @@ namespace OntologyMain.Data
     public virtual DbSet<PatientEntity> PatientEntities { get; set; }
     public virtual DbSet<StatusEntity>  StatusEntities { get; set; }
     public virtual DbSet<StateEntity>  StateEntities { get; set; }
-    public virtual DbSet<SignEntity> SignEntities { get; set; }
 
     public OntologyMainContext(DbContextOptions options) : base(options)
     {
