@@ -21,16 +21,16 @@ namespace OntologyMain.Api.Controllers
       Logger = logger;
     }
 
-    [HttpGet("signs")]
-    public IActionResult GetSigns()
-    {
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: Start.");
+    //[HttpGet("signs")]
+    //public IActionResult GetSigns()
+    //{
+    //  Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: Start.");
 
-      var result = SignType.GetList().Select(x => new TypeViewModel {Id = x.Id, Name = x.Name});
+    //  var result = SignType.GetList().Select(x => new TypeViewModel {Id = x.Id, Name = x.Name});
 
-      Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: End.");
-      return new OkResponseResult("Signs", new {Signs = result});
-    }
+    //  Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: End.");
+    //  return new OkResponseResult("Signs", new {Signs = result});
+    //}
 
     [HttpGet("medicines")]
     public IActionResult GetMedicines()
