@@ -20,7 +20,7 @@ export class PatientInput extends React.Component<Props, State> {
             patient: {
                 firstName: "",
                 lastName: "",
-                sexType: "None",
+                genderType: 0,
                 birthDate: ""
             }
         };
@@ -31,7 +31,7 @@ export class PatientInput extends React.Component<Props, State> {
     addPatient(event) {
         this.firstName = this.firstName.value;
         this.lastName = this.lastName.value;
-        this.sexType = this.sexType[this.sexType.selectedIndex].value;
+        this.genderType = this.genderType[this.genderType.selectedIndex].value;
         this.birthDate = this.birthDate.value;
 
         const requestOptions = {
@@ -42,7 +42,7 @@ export class PatientInput extends React.Component<Props, State> {
             body: JSON.stringify({
                 FirstName: this.firstName,
                 LastName: this.lastName,
-                SexType: this.sexType,
+                GenderType: this.genderType,
                 BirthDate: this.birthDate
             })
         };
@@ -56,7 +56,7 @@ export class PatientInput extends React.Component<Props, State> {
             <form className="patient" onSubmit={e => this.addPatient(e)}>
                 <input ref={input => this.firstName = input}/>
                 <input ref={input => this.lastName = input}/>
-                <select ref={selected => this.sexType = selected} defaultValue="0">
+                <select ref={selected => this.genderType = selected} defaultValue="0">
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="0">Not specified</option>
