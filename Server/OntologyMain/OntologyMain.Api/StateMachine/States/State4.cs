@@ -10,18 +10,18 @@ namespace OntologyMain.Api.StateMachine.States
       StateType = StateType.State4;
     }
 
-    public override StateType NextState(Status status)
+    public override BaseState NextState(Status status)
     {
       var pef = status.Parameters.Pef;
       var isWheezing = status.Parameters.IsWheezing;
 
-      if (pef > 0.6 && pef < 0.8 && isWheezing) return StateType.State3;
+      if (pef > 0.6 && pef < 0.8 && isWheezing) return new State3();
 
-      if (status.ElapsedTime() < ParametersConstants.MaxTime && !status.IsAnyChanged()) return StateType;
+      if (status.ElapsedTime() < ParametersConstants.MaxTime && !status.IsAnyChanged()) return new State4();
 
-      if (status.ElapsedTime() >= ParametersConstants.MaxTime) return StateType.State8;
+      if (status.ElapsedTime() >= ParametersConstants.MaxTime) return new State8();
 
-      return StateType;
+      return new State4();
     }
   }
 }

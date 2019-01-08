@@ -9,9 +9,9 @@ namespace OntologyMain.Api.StateMachine.States
       StateType = StateType.State10;
     }
 
-    public override StateType NextState(Status status)
+    public override BaseState NextState(Status status)
     {
-      return StateType.End;
+      return new EndState();
     }
   }
 }

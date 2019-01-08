@@ -35,7 +35,6 @@ namespace OntologyMain.Api
       services.AddDbContext<OntologyMainContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OntologyMainConnection")));
       services.AddTransient<PatientsRepository>();
       services.AddTransient<PatientService>();
-      services.AddSingleton<StateSwitcher>();
       services.AddOptions();
       services.Configure<ServersSettings>(Configuration.GetSection("ServersSettings"));
     }

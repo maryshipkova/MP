@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
 using Microsoft.Extensions.Logging;
 using OntologyMain.Api.StateMachine;
+using OntologyMain.Api.StateMachine.States;
 using OntologyMain.Api.ViewModels;
 using OntologyMain.Data.Dtos;
 using OntologyMain.Data.Repositories;
@@ -15,13 +16,11 @@ namespace OntologyMain.Api.Services
   {
     private PatientsRepository Db { get; }
     private ILogger<PatientService> Logger { get; }
-    private StateSwitcher StateSwitcher { get; }
 
-    public PatientService(ILogger<PatientService> logger, PatientsRepository db, StateSwitcher stateSwitcher)
+    public PatientService(ILogger<PatientService> logger, PatientsRepository db)
     {
       Db = db;
       Logger = logger;
-      StateSwitcher = stateSwitcher;
     }
 
     public async Task<FullPatientViewModel> CreatePatient(string firstName, string lastName, DateTime birthDate,
@@ -164,18 +163,10 @@ namespace OntologyMain.Api.Services
       return patient;
     }
 
-    private StateType ProcessPatient(StateType currentStateType, Status currentStatus)
+    private static StateType ProcessPatient(StateType currentStateType, Status currentStatus)
     {
-      var currentState = StateSwitcher.Switch(currentStateType);
-      return currentState.NextState(currentStatus);
-      //var addedState = await Db.AddStateAsync(patient.PatientId, nextState);
-      //patient.PatientState = new PatientState
-      //{
-      //  PatientStateId = addedState.StateId,
-      //  CreatedDate = addedState.CreatedDate,
-      //  StateType = addedState.StateType,
-      //  StatusId = addedState.StatusId
-      //};
+      var currentState = BaseState.Switch(currentStateType);
+      return currentState.NextState(currentStatus).StateType;
     }
   }
 }
