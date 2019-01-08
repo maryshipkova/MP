@@ -23,8 +23,9 @@ export class PatientList extends React.Component<Props, State> {
         fetch("https://api.4buttons.ru/v0.1/patients").then(response => {
             return response.json();
         }).then(res => {
+            console.log(res);
             this.setState({
-                patients: res.data.patients
+                patients: res.data.patients.list
             });
         });
     }
@@ -34,10 +35,13 @@ export class PatientList extends React.Component<Props, State> {
 
     render() {
         return (
-            this.state.patients.length > 0 &&
-            this.state.patients.map((patient: PatientModel) => {
+            <ul>
+                {this.state.patients.length > 0 &&
+                this.state.patients.map((patient: PatientModel) => {
                 return <Patient key={patient.patientId} {...patient} />;
-            })
+                })}
+            </ul>
+
         );
     }
 }
