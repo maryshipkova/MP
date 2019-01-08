@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CommonLibraries.CommonTypes;
+using CommonLibraries;
 using OntologyMain.Data.Dtos;
 
 namespace OntologyMain.Api.StateMachine
@@ -9,16 +7,14 @@ namespace OntologyMain.Api.StateMachine
   public class Status
   {
     public int StatusId { get; set; }
-    public Dictionary<SignType, Sign> Signs { get; private set; }
+    public Parameters Parameters { get; private set; }
     public Status PreviousStatus { get; private set; }
-    public DateTime StartDate { get; private set; } 
-    public DateTime EndDate { get; private set; } 
+    public DateTime StartDate { get; private set; }
+    public DateTime EndDate { get; private set; }
 
     protected Status()
     {
-   
     }
-
 
     public static Status CreateStatus(StatusDto previousStatusDto, StatusDto newStatusDto)
     {
@@ -27,58 +23,53 @@ namespace OntologyMain.Api.StateMachine
         StartDate = newStatusDto.CreatedDate,
         EndDate = DateTime.UtcNow,
         StatusId = newStatusDto.StatusId,
-        Signs = new Dictionary<SignType, Sign>()
+        Parameters =
+          new Parameters
+          {
+            IsHospitalized = newStatusDto.Parameters.IsHospitalized,
+            IsWheezing = newStatusDto.Parameters.IsWheezing,
+            Pef = newStatusDto.Parameters.Pef,
+            SpO2 = newStatusDto.Parameters.SpO2
+          },
+        PreviousStatus = new Status
+        {
+          StartDate = previousStatusDto.CreatedDate,
+          EndDate = newStatusDto.CreatedDate,
+          StatusId = previousStatusDto.StatusId,
+          Parameters = new Parameters
+          {
+            IsHospitalized = previousStatusDto.Parameters.IsHospitalized,
+            IsWheezing = previousStatusDto.Parameters.IsWheezing,
+            Pef = previousStatusDto.Parameters.Pef,
+            SpO2 = previousStatusDto.Parameters.SpO2
+          }
+        }
       };
-
-      foreach (var signDto in newStatusDto.Signs)
-      {
-        result.Signs.Add(signDto.SignType, new Sign(signDto.SignId, signDto.SignType, signDto.Intensity) );
-      }
-
-      result.PreviousStatus = previousStatusDto.StatusId == newStatusDto.StatusId ? new VoidStatus() : new Status();
-
-      result.PreviousStatus.StartDate = previousStatusDto.CreatedDate;
-      result.PreviousStatus.EndDate = newStatusDto.CreatedDate;
-      result.PreviousStatus.StatusId = previousStatusDto.StatusId;
-      result.PreviousStatus.Signs = new Dictionary<SignType, Sign>();
-      foreach (var signDto in newStatusDto.Signs)
-      {
-        result.PreviousStatus.Signs.Add(signDto.SignType, new Sign(signDto.SignId, signDto.SignType, signDto.Intensity));
-      }
 
       return result;
     }
 
     public bool IsAnyChanged()
     {
-      if (PreviousStatus is VoidStatus) return true;
-      if (!Signs.Any() || PreviousStatus is VoidStatus || !PreviousStatus.Signs.Any()) return false;
-      var currentSigns = Signs;
-      var previousSigns = PreviousStatus.Signs;
-      foreach (var currentSign in currentSigns)
-      {
-        if (!previousSigns.TryGetValue(currentSign.Key, out Sign previousSign)) return false;
-        if (!currentSign.Value.IsTheSameIntensity(previousSign)) return false;
-      }
-      return true;
+      if (PreviousStatus == null) return false;
+
+      var prevParam = PreviousStatus.Parameters;
+      if (Parameters.IsHospitalized != prevParam?.IsHospitalized) return true;
+      if (Parameters.IsWheezing != prevParam.IsWheezing) return true;
+      if (!Parameters.Pef.EqualsStrict(prevParam.Pef)) return true;
+      if (!Parameters.SpO2.EqualsStrict(prevParam.SpO2)) return true;
+
+      return false;
     }
 
-    public bool IsSignChanged(Sign sign)
+    public TimeSpan ElapsedTime()
     {
-      if (!Signs.TryGetValue(sign.SignType, out Sign currentSign)) return false;
-      if (PreviousStatus is VoidStatus ||
-          !PreviousStatus.Signs.TryGetValue(sign.SignType, out Sign previousSign)) return false;
-
-      return currentSign.IsTheSameIntensity(previousSign);
+      return ElapsedTime(EndDate == DateTime.MinValue ? DateTime.UtcNow : EndDate);
     }
 
-    public TimeSpan ElapsedTime() => ElapsedTime(EndDate == DateTime.MinValue ? DateTime.UtcNow : EndDate);
-    public TimeSpan ElapsedTime(DateTime endTime) => StartDate.Subtract(DateTime.UtcNow);
-
-    
-  }
-
-  public sealed class VoidStatus : Status
-  {
+    public TimeSpan ElapsedTime(DateTime endTime)
+    {
+      return StartDate.Subtract(DateTime.UtcNow);
+    }
   }
 }

@@ -11,7 +11,7 @@ namespace OntologyMain.Api.StateMachine.States
 
     public override StateType NextState(Status status)
     {
-      return status.Signs.ContainsKey(SignType.Hospitalize) ? StateType.State6 : StateType.State7;
+      return status.Parameters.IsHospitalized ? StateType.State6 : StateType.State7;
     }
   }
 }

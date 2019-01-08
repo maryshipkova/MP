@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
@@ -13,14 +12,14 @@ namespace OntologyMain.Api.StateMachine.States
 
     public override StateType NextState(Status status)
     {
-      var pef = status.Signs.GetValueOrDefault(SignType.Pef).Intensity;
-      var isWheezing = status.Signs.GetValueOrDefault(SignType.Wheezing) != null;
+      var pef = status.Parameters.Pef;
+      var isWheezing = status.Parameters.IsWheezing;
 
       if (!isWheezing && pef > 0.8 && status.ElapsedTime().TotalDays >= 4) return StateType.State2;
 
-      if (status.ElapsedTime() < SignConstants.MaxTime && !status.IsAnyChanged()) return StateType;
+      if (status.ElapsedTime() < ParametersConstants.MaxTime && !status.IsAnyChanged()) return StateType;
 
-      throw new Exception($"{nameof(State4)}.{nameof(NextState)}: This is no other condition to transit.");
+      return StateType;
     }
   }
 }
