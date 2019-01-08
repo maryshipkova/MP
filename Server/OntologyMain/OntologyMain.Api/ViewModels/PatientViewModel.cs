@@ -58,7 +58,7 @@ namespace OntologyMain.Api.ViewModels
         {
           CreatedDate = patient.Status.CreatedDate,
           StatusId = patient.Status.StatusId,
-          Signs = patient.Status.Signs.Select(x => new SignViewModel {SignType = x.SignType, Intensity = x.Intensity}).ToList()
+          Parameters = patient.Status.Parameters
         }
       };
       return result;
