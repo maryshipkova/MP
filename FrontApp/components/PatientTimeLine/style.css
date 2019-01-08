@@ -42,34 +42,12 @@
     background: #F45B69;
 }
 
-.timeline ul li div::before {
-    content: '';
-    position: absolute;
-    bottom: 7px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-}
 
 .timeline ul li:nth-child(odd) div {
-    left: 3vw;
+    left: 1vw;
+    bottom:1vw;
 }
 
-.timeline ul li:nth-child(odd) div::before {
-    left: -15px;
-    border-width: 8px 16px 8px 0;
-    border-color: transparent #F45B69 transparent transparent;
-}
-
-.timeline ul li:nth-child(even) div {
-    left: -30vw;
-}
-
-.timeline ul li:nth-child(even) div::before {
-    right: -3vw;
-    border-width: 8px 0 8px 16px;
-    border-color: transparent transparent transparent #F45B69;
-}
 
 time {
     display: block;
@@ -80,7 +58,8 @@ time {
 
 .timeline ul li div:nth-child(2n+1) {
     position: relative;
-    left: -30vw !important;
+    left: -27.5vw !important;
+    bottom: 1vw;
 }
 
 .timeline ul li div:nth-child(2n) {
@@ -89,19 +68,8 @@ time {
 
 .timeline ul li:nth-child(2n) div:nth-child(2n) {
     position: absolute;
-    left: 3vw;
-}
-
-.timeline ul li:nth-child(2n) div:nth-child(2n)::before {
-    right: 27.5vw;
-    border-width: 8px 16px 8px 0;
-    border-color: transparent #F45B69 transparent transparent;
-}
-
-.timeline ul li div:nth-child(2n+1)::before {
-    left: 27.5vw;
-    border-width: 8px 0 8px 16px;
-    border-color: transparent transparent transparent #F45B69;
+    left: 1vw;
+    bottom:1vw;
 }
 
 /* EFFECTS
