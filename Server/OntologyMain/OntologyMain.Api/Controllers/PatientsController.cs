@@ -55,7 +55,7 @@ namespace OntologyMain.Api.Controllers
     [HttpPost("{patientId}/status")]
     public async Task<IActionResult> AddPatientStatus(int patientId, [FromBody] CreateStatusViewModel createdStatus)
     {
-      var patient = await PatientService.AddPatientStatus(patientId, createdStatus.Signs);
+      var patient = await PatientService.AddPatientStatus(patientId, createdStatus.Parameters);
       if (patient == null)
         return new NotFoundResponseResult($"There is no patient with patientId:{patientId}");
 
