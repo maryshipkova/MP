@@ -5,6 +5,7 @@ import {Patient} from "components/Patient";
 import {PatientModel} from "models/PatientModel";
 import {PatientListModel} from "models/PatientListModel";
 import {PatientSearch} from "components/PatientSearch";
+import {serverDomain} from "constants/server";
 import "./style.css"
 
 
@@ -25,7 +26,7 @@ export class PatientList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        fetch("https://api.4buttons.ru/v0.1/patients").then(response => {
+        fetch(`${serverDomain}/patients`).then(response => {
             return response.json();
         }).then(res => {
             console.log(res);

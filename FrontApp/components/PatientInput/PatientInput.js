@@ -4,6 +4,7 @@ import React from 'react';
 import './style.css';
 import {PatientModel} from 'models/PatientModel';
 import {sexType} from 'types/SexType';
+import {serverDomain} from "constants/server";
 
 type Props = {};
 
@@ -45,7 +46,7 @@ export class PatientInput extends React.Component<Props, State> {
                 BirthDate: this.birthDate
             })
         };
-        fetch("https://api.4buttons.ru/v0.1/patients", requestOptions);
+        fetch(`${serverDomain}/patients`, requestOptions);
 
         event.preventDefault();
     }
