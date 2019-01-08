@@ -37,7 +37,7 @@
 .timeline ul li div {
     position: relative;
     bottom: 0;
-    width: 400px;
+    width: 25vw;
     padding: 15px;
     background: #F45B69;
 }
@@ -52,7 +52,7 @@
 }
 
 .timeline ul li:nth-child(odd) div {
-    left: 45px;
+    left: 3vw;
 }
 
 .timeline ul li:nth-child(odd) div::before {
@@ -62,11 +62,11 @@
 }
 
 .timeline ul li:nth-child(even) div {
-    left: -439px;
+    left: -30vw;
 }
 
 .timeline ul li:nth-child(even) div::before {
-    right: -15px;
+    right: -3vw;
     border-width: 8px 0 8px 16px;
     border-color: transparent transparent transparent #F45B69;
 }
@@ -80,7 +80,7 @@ time {
 
 .timeline ul li div:nth-child(2n+1) {
     position: relative;
-    left: -470px !important;
+    left: -30vw !important;
 }
 
 .timeline ul li div:nth-child(2n) {
@@ -89,17 +89,17 @@ time {
 
 .timeline ul li:nth-child(2n) div:nth-child(2n) {
     position: absolute;
-    left: 45px;
+    left: 3vw;
 }
 
 .timeline ul li:nth-child(2n) div:nth-child(2n)::before {
-    right: 430px;
+    right: 27.5vw;
     border-width: 8px 16px 8px 0;
     border-color: transparent #F45B69 transparent transparent;
 }
 
 .timeline ul li div:nth-child(2n+1)::before {
-    left: 430px;
+    left: 27.5vw;
     border-width: 8px 0 8px 16px;
     border-color: transparent transparent transparent #F45B69;
 }
@@ -133,33 +133,6 @@ time {
     transform: none;
     visibility: visible;
     opacity: 1;
-}
-
-/* GENERAL MEDIA QUERIES
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-@media screen and (max-width: 900px) {
-    .timeline ul li div {
-        width: 250px;
-    }
-
-    .timeline ul li:nth-child(even) div {
-        left: -289px;
-        /*250+45-6*/
-    }
-
-    .timeline ul li div:nth-child(2n+1) {
-        left: -315px !important;
-    }
-
-    .timeline ul li div:nth-child(2n+1)::before {
-        left: 280px;
-    }
-
-    .timeline ul li:nth-child(2n) div:nth-child(2n)::before {
-        left: -15px;
-    }
-
 }
 
 .add-btn {

@@ -12,11 +12,9 @@ export class PatientTimeLine extends React.Component {
             statuses: [],
         };
         this.addState = this.addState.bind(this);
-        //this.nothingChanged = this.nothingChanged.bind(this);
     }
 
     componentDidMount() {
-        console.log(this.props.patientid);
         fetch(`${serverDomain}/patients/${this.props.patientid}/history`).then(res => {
             return res.json();
         }).then(res => {
@@ -76,23 +74,6 @@ export class PatientTimeLine extends React.Component {
             statuses: currentState,
         });
     }
-
-    componentDidUpdate() {
-        //this.button.scrollIntoView({behavior: "smooth"});
-    }
-
-    /*nothingChanged(listItemId) {
-        let statuses = this.state.statuses.slice();
-        for (let stateIndex in statuses) {
-            if (states[stateIndex].leftSide.id === listItemId) {
-                states[stateIndex] = states[stateIndex - 1];
-                this.setState({
-                    states
-                });
-                break;
-            }
-        }
-    }*/
 
     render() {
         return (
