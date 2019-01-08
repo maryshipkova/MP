@@ -9,9 +9,9 @@ namespace OntologyMain.Api.StateMachine.States
       StateType = StateType.State3;
     }
 
-    public override StateType NextState(Status status)
+    public override BaseState NextState(Status status)
     {
-      return status.Parameters.IsHospitalized ? StateType.State6 : StateType.State7;
+      return status.Parameters.IsHospitalized ? (BaseState)new State6() : new State7();
     }
   }
 }
