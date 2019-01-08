@@ -67,7 +67,7 @@ namespace OntologyMain.Api.Services
       return patients;
     }
 
-    public async Task<FullPatientViewModel> AddPatientStatus(int patientId, IEnumerable<AddSignViewModel> signs)
+    public async Task<FullPatientViewModel> AddPatientStatus(int patientId, ParametersDto parameters)
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(AddPatientStatus)}: Start.");
 
@@ -75,8 +75,7 @@ namespace OntologyMain.Api.Services
       if (patientDb == null) return null;
 
       var prevStatusDb = patientDb.Status;
-      var newStatusDb = await Db.AddStatusAsync(patientId,
-        signs.Select(x => new SignDto {Intensity = x.Intensity, SignType = (SignType) x.SignTypeId}));
+      var newStatusDb = await Db.AddStatusAsync(patientId, parameters);
 
       var status = Status.CreateStatus(prevStatusDb, newStatusDb);
 
@@ -137,7 +136,7 @@ namespace OntologyMain.Api.Services
         {
           CreatedDate = statusDb.CreatedDate,
           StatusId = statusDb.StatusId,
-          Signs = statusDb.Signs.Select(x => new SignViewModel {SignType = x.SignType, Intensity = x.Intensity}),
+          Parameters = statusDb.Parameters,
           Description = description,
           Medicines = medicines,
           PatientState = stateDb.StateType
