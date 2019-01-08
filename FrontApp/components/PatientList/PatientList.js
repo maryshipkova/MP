@@ -4,6 +4,9 @@ import React from "react";
 import {Patient} from "components/Patient";
 import {PatientModel} from "models/PatientModel";
 import {PatientListModel} from "models/PatientListModel";
+import {PatientSearch} from "components/PatientSearch";
+import "./style.css"
+
 
 type Props = {};
 
@@ -15,8 +18,10 @@ export class PatientList extends React.Component<Props, State> {
     constructor() {
         super();
         this.state = {
-            patients: []
+            patients: [],
+            filteredPatients:[],
         };
+        this.filterList = this.filterList.bind(this);
     }
 
     componentDidMount() {
@@ -24,24 +29,39 @@ export class PatientList extends React.Component<Props, State> {
             return response.json();
         }).then(res => {
             console.log(res);
+            let patientsWithNames = res.data.patients.list;
+            patientsWithNames.forEach(patient => {
+                patient.fullName = `${patient.firstName} ${patient.lastName}`
+            });
             this.setState({
-                patients: res.data.patients.list
+                patients: patientsWithNames,
+                filteredPatients:patientsWithNames
             });
         });
     }
+
+    filterList(text) {
+        let filteredList = this.state.patients.filter(patient => {
+            return patient.fullName.toLowerCase().search(text.toLowerCase()) !== -1;
+        });
+        this.setState({filteredPatients: filteredList});
+    }
+
 
     sort() {
     }
 
     render() {
         return (
-            <ul>
-                {this.state.patients.length > 0 &&
-                this.state.patients.map((patient: PatientModel) => {
-                return <Patient key={patient.patientId} {...patient} />;
-                })}
-            </ul>
-
+            <div className="patient-list">
+                <PatientSearch filter={this.filterList}/>
+                <ul>
+                    {this.state.patients.length > 0 &&
+                    this.state.filteredPatients.map((patient: PatientModel) => {
+                        return <Patient setpatientid={this.props.setpatientid} key={patient.patientId} {...patient} />;
+                    })}
+                </ul>
+            </div>
         );
     }
 }

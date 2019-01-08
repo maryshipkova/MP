@@ -1,9 +1,16 @@
 /* TIMELINE
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.timeline ul {
+.timeline{
+    width: 75vw;
+    min-height: 100vh;
     background: #456990;
-    padding: 50px 0;
+}
+
+.timeline ul {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
 }
 
 .timeline ul li {
@@ -157,7 +164,7 @@ time {
 
 .add-btn {
     position: absolute;
-    transform: translateX(-50%);
+    transform: translate(-50%,-95%);
     min-width: 100px;
     min-height: 25px;
 }

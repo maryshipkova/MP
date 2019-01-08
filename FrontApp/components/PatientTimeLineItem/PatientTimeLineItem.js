@@ -25,7 +25,7 @@ export class PatientTimeLineItem extends React.Component {
                 }
             })
         };
-        fetch(`${serverDomain}/patients/1/status`, requestOptions).then((res) => {
+        fetch(`${serverDomain}/patients/${this.props.patientid}/status`, requestOptions).then((res) => {
             return res.json();
         }).then(res => {
             console.log(res);

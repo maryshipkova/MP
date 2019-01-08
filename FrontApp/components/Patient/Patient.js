@@ -12,8 +12,12 @@ export const Patient = (props: PatientModel) => {
         return `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`
     }
 
+    function setPatientId(){
+        props.setpatientid(props.patientId);
+    }
+
     return (
-        <li className="patient">
+        <li className="patient" onClick={setPatientId}>
             <span className="nameAgeGender">
                 {`${props.lastName} ${props.firstName} ${props.genderType.name}, ${getFullDate(props.birthDate)}`}
             </span>

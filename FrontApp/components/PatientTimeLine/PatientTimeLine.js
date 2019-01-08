@@ -16,10 +16,10 @@ export class PatientTimeLine extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${serverDomain}/patients/1/history`).then(res => {
+        console.log(this.props.patientid);
+        fetch(`${serverDomain}/patients/${this.props.patientid}/history`).then(res => {
             return res.json();
         }).then(res => {
-            console.log(res.data.history.statuses.list, '--');
             this.setState({statuses: res.data.history.statuses.list});
         });
 
@@ -46,6 +46,14 @@ export class PatientTimeLine extends React.Component {
         window.addEventListener("load", showListItem);
         window.addEventListener("resize", showListItem);
         window.addEventListener("scroll", showListItem);*/
+    }
+
+    componentWillReceiveProps(nextProps){
+        fetch(`${serverDomain}/patients/${nextProps.patientid}/history`).then(res => {
+            return res.json();
+        }).then(res => {
+            this.setState({statuses: res.data.history.statuses.list});
+        });
     }
 
     getMaxStatusId(){
@@ -93,6 +101,7 @@ export class PatientTimeLine extends React.Component {
                     {this.state.statuses.map(status => {
                         return <PatientTimeLineItem
                             {...status}
+                            patientid={this.props.patientid}
                             key={status.statusId}/>
                     })}
                     <li>
