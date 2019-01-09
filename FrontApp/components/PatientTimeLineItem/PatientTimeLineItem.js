@@ -44,7 +44,7 @@ export class PatientTimeLineItem extends React.Component {
                     <p>Дата записи: {this.getFullDate()}</p>
                     <p>Описание:</p>
                     {this.props.description}
-                    <p>
+                    {this.props.medicines.length ? <p>
                         Лекарства:<br/>
                         {this.props.medicines.map(medicine => {
                             return <>
@@ -52,7 +52,7 @@ export class PatientTimeLineItem extends React.Component {
                                 {medicine.description}<br/>
                             </>
                         })}
-                    </p>
+                    </p> : null}
                 </div>
                 <div>
                     <input type="number"
