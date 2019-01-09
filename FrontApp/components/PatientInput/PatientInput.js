@@ -54,15 +54,15 @@ export class PatientInput extends React.Component<Props, State> {
     render() {
         return (
             <form className="patient" onSubmit={e => this.addPatient(e)}>
-                <input ref={input => this.firstName = input}/>
-                <input ref={input => this.lastName = input}/>
+                <input ref={input => this.firstName = input} placeholder="First Name"/>
+                <input ref={input => this.lastName = input} placeholder="Last Name"/>
                 <select ref={selected => this.genderType = selected} defaultValue="0">
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="0">Not specified</option>
                 </select>
                 <input type="date" ref={date => this.birthDate = date}/>
-                <button type="submit">Send form</button>
+                <button type="submit">Add new Patient</button>
             </form>
         )
     }

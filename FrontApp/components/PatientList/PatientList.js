@@ -7,6 +7,7 @@ import {PatientListModel} from "models/PatientListModel";
 import {PatientSearch} from "components/PatientSearch";
 import {serverDomain} from "constants/server";
 import "./style.css"
+import {PatientInput} from "components/PatientInput";
 
 
 type Props = {};
@@ -55,6 +56,7 @@ export class PatientList extends React.Component<Props, State> {
     render() {
         return (
             <div className="patient-list">
+                <PatientInput/>
                 <PatientSearch filter={this.filterList}/>
                 <ul>
                     {this.state.patients.length > 0 &&
