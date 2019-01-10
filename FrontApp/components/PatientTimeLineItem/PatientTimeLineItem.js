@@ -42,7 +42,7 @@ export class PatientTimeLineItem extends React.Component {
     render() {
         return (
             <li className="in-view" ref={li => this.li = li}>
-                <div>
+                {this.state.unsaved ? null : <div>
                     <p>Дата записи: {this.getFullDate()}</p>
                     <p>Описание:</p>
                     {this.state.description}
@@ -55,7 +55,7 @@ export class PatientTimeLineItem extends React.Component {
                             </>
                         })}
                     </p> : null}
-                </div>
+                </div> }
                 <div>
                     <input type="number"
                            placeholder="Pef"
