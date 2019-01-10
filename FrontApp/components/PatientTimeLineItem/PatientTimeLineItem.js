@@ -30,8 +30,7 @@ export class PatientTimeLineItem extends React.Component {
             return res.json();
         }).then(res => {
             console.log(res);
-            res.data.patient.status.unsaved = false; //костыль, мне лень думать
-            this.setState(res.data.patient.status);
+            this.setState(Object.assign({unsaved: false}, res.data.patient.status));
         })
     }
 
