@@ -68,7 +68,8 @@ export class PatientTimeLine extends React.Component {
         currentState.push({
             statusId: this.getMaxStatusId()+1,
             parameters:{},
-            medicines:[]
+            medicines:[],
+            unsaved: true
         });
         this.setState({
             statuses: currentState,
