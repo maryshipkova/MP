@@ -12,10 +12,6 @@ namespace OntologyMain.Api.StateMachine
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
 
-    protected Status()
-    {
-    }
-
     public static Status CreateStatus(StatusDto previousStatusDto, StatusDto newStatusDto)
     {
       var result = new Status

@@ -12,10 +12,5 @@ namespace OntologyMain.Data
     public OntologyMainContext(DbContextOptions options) : base(options)
     {
     }
-
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //  modelBuilder.Entity<DiagnosisDrugEntity>().HasKey(x => new {x.DiagnosisId, x.DrugId});
-    //}
   }
 }

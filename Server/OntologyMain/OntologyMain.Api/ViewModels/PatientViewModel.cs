@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using CommonLibraries.CommonTypes;
 using OntologyMain.Data.Dtos;
 using OntologyMain.Data.Entities;
@@ -11,10 +10,13 @@ namespace OntologyMain.Api.ViewModels
   {
     [Required]
     public string FirstName { get; set; }
+
     [Required]
     public string LastName { get; set; }
+
     [Required]
     public DateTime BirthDate { get; set; }
+
     [Required]
     public int GenderType { get; set; }
   }
@@ -35,7 +37,7 @@ namespace OntologyMain.Api.ViewModels
         BirthDate = patient.BirthDate,
         FirstName = patient.FirstName,
         LastName = patient.LastName,
-        GenderType = (GenderType)patient.GenderTypeId,
+        GenderType = (GenderType) patient.GenderTypeId
       };
       return result;
     }

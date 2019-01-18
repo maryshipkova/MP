@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using OntologyMain.Data.Dtos;
+﻿using OntologyMain.Data.Dtos;
 
 namespace OntologyMain.Api.ViewModels
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using CommonLibraries.CommonTypes;
+﻿using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
 {
