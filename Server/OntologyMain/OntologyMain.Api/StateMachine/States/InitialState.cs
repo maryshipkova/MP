@@ -1,5 +1,4 @@
-﻿using System;
-using CommonLibraries.CommonTypes;
+﻿using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.StateMachine.States
 {
@@ -17,8 +16,7 @@ namespace OntologyMain.Api.StateMachine.States
       var pef = status.Parameters.Pef;
       var isWheezing = status.Parameters.IsWheezing;
 
-      if (pef > 0.8 && !isWheezing && status.ElapsedTime().TotalHours >= 5)
-        return new State2();
+      if (pef > 0.8 && !isWheezing && status.ElapsedTime().TotalHours >= 5) return new State2();
 
       if (pef < 0.6 && isWheezing) return new State3();
 

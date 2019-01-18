@@ -7,7 +7,7 @@ namespace OntologyMain.Api.Services
   public class StateContext
   {
     public string Description { get; set; } = string.Empty;
-    public List<MedicineType> Medicines { get; set; } = new List<MedicineType>();
+    public IEnumerable<MedicineType> Medicines { get; set; } = new List<MedicineType>();
 
     public static StateContext FromState(StateType type)
     {
