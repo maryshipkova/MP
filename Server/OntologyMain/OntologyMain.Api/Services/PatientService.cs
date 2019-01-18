@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
 using Microsoft.Extensions.Logging;
 using OntologyMain.Api.StateMachine;
-using OntologyMain.Api.StateMachine.States;
 using OntologyMain.Api.ViewModels;
 using OntologyMain.Data.Dtos;
 using OntologyMain.Data.Repositories;
@@ -78,7 +77,7 @@ namespace OntologyMain.Api.Services
 
       var status = Status.CreateStatus(prevStatusDb, newStatusDb);
 
-      var newStateType = ProcessPatient(patientDb.PatientState.StateType, status);
+      var newStateType = PatientProcessor.ProcessPatient(patientDb.PatientState.StateType, status);
       await Db.AddStateAsync(patientId, newStateType);
 
       var newPatientDb = await Db.GetPatientAsync(patientId);
@@ -100,7 +99,7 @@ namespace OntologyMain.Api.Services
 
       var status = Status.CreateStatus(prevStatusDb, currentStatusDb);
 
-      var newStateType = ProcessPatient(patientDb.PatientState.StateType, status);
+      var newStateType = PatientProcessor.ProcessPatient(patientDb.PatientState.StateType, status);
       await Db.AddStateAsync(patientId, newStateType);
 
       var newPatientDb = await Db.GetPatientAsync(patientId);
@@ -161,12 +160,6 @@ namespace OntologyMain.Api.Services
       patient.Status.Medicines = TypeViewModel.FromCustomEnums(context.Medicines);
       patient.Status.PatientState = patientDto.PatientState.StateType;
       return patient;
-    }
-
-    private static StateType ProcessPatient(StateType currentStateType, Status currentStatus)
-    {
-      var currentState = BaseState.Switch(currentStateType);
-      return currentState.NextState(currentStatus).StateType;
     }
   }
 }
