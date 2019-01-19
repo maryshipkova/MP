@@ -7,11 +7,20 @@ import {sexType} from 'types/SexType';
 
 export const Patient = (props: PatientModel) => {
 
+    function getFullDate(date) {
+        let newDate = new Date(date);
+        return `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`
+    }
+
+    function setPatientId(){
+        props.setpatientid(props.patientId);
+    }
+
     return (
-        <div className="patient">
+        <li className="patient" onClick={setPatientId}>
             <span className="nameAgeGender">
-                {`${props.lastName} ${props.firstName} ${sexType[props.sexType]}, ${props.birthDate}`}
+                {`${props.lastName} ${props.firstName} ${props.genderType.name}, ${getFullDate(props.birthDate)}`}
             </span>
-        </div>
+        </li>
     )
 };

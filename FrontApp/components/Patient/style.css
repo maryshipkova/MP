@@ -1,13 +1,13 @@
-.patient {
+li.patient {
     display: flex;
     flex-direction: row;
+    color: #0088cc;
+    border: 2px solid #ccc;
+    padding: .5rem;
+    width: 100%;
+    cursor: pointer;
 }
 
-.photo {
-    width:100px;
-    height:100px;
-}
-
-.nameAgeGender{
-    margin-left: 10px;
+li.patient:hover {
+    background-color: gainsboro;
 }

@@ -48,7 +48,8 @@ module.exports = function() {
       alias: {
         models: path.resolve(__dirname, "models/"),
         components: path.resolve(__dirname, "components/"),
-        types: path.resolve(__dirname, "types/")
+        types: path.resolve(__dirname, "types/"),
+        constants: path.resolve(__dirname, "constants/")
       }
     },
     plugins: [

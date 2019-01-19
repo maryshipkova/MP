@@ -1,0 +1,111 @@
+/* TIMELINE
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.timeline{
+    width: 75vw;
+    min-height: 100vh;
+    background: #456990;
+}
+
+.timeline ul {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.timeline ul li {
+    list-style-type: none;
+    position: relative;
+    width: 6px;
+    margin: 0 auto;
+    padding-top: 50px;
+    background: #fff;
+}
+
+.timeline ul li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 25vw;
+    padding: 15px;
+    background: #F45B69;
+}
+
+
+.timeline ul li:nth-child(odd) div {
+    left: 1vw;
+    bottom:1vw;
+}
+
+
+time {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.timeline ul li div:nth-child(2n+1) {
+    position: relative;
+    left: -27.5vw !important;
+    bottom: 1vw;
+}
+
+.timeline ul li div:nth-child(2n) {
+    position: absolute;
+}
+
+.timeline ul li:nth-child(2n) div:nth-child(2n) {
+    position: absolute;
+    left: 1vw;
+    bottom:1vw;
+}
+
+/* EFFECTS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.timeline ul li::after {
+    transition: background .5s ease-in-out;
+}
+
+.timeline ul li.in-view::after {
+    background: #F45B69;
+}
+
+.timeline ul li div {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
+.timeline ul li:nth-child(odd) div {
+    transform: translate3d(200px, 0, 0);
+}
+
+.timeline ul li:nth-child(even) div {
+    transform: translate3d(-200px, 0, 0);
+}
+
+.timeline ul li.in-view div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+.add-btn {
+    position: absolute;
+    transform: translate(-50%,-95%);
+    min-width: 100px;
+    min-height: 25px;
+}
