@@ -7,6 +7,8 @@ import {PatientList} from 'components/PatientList';
 import {PatientInput} from 'components/PatientInput';
 import {PatientTimeLine} from "./components/PatientTimeLine";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./style.css";
 
 class Check extends React.Component {

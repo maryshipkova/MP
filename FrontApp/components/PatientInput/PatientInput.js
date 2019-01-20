@@ -62,7 +62,7 @@ export class PatientInput extends React.Component<Props, State> {
                     <option value="0">Not specified</option>
                 </select>
                 <input type="date" ref={date => this.birthDate = date}/>
-                <button type="submit">Add new Patient</button>
+                <button type="submit" className="btn btn-primary">Add new Patient</button>
             </form>
         )
     }
