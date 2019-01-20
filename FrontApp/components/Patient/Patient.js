@@ -17,10 +17,11 @@ export const Patient = (props: PatientModel) => {
     }
 
     return (
-        <li className="patient" onClick={setPatientId}>
-            <span className="nameAgeGender">
+
+        <li className={props.activePatient == props.patientId ? "active patient" : "patient"} onClick={setPatientId}>
+            <p className="nameAgeGender">
                 {`${props.lastName} ${props.firstName} ${props.genderType.name}, ${getFullDate(props.birthDate)}`}
-            </span>
+            </p>
         </li>
     )
 };

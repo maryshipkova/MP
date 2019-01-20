@@ -1,6 +1,7 @@
 .patient-search{
-    background-color: #3d3d3d;
+    background-color: #f8f9fa;
     color: #0088cc;
     padding: .5rem;
-    width: 100%;
+    width: 99%;
+    border: 0;
 }

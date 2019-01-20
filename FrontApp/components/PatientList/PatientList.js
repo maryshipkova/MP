@@ -53,17 +53,21 @@ export class PatientList extends React.Component<Props, State> {
     sort() {
     }
 
+    setpatientid(){
+
+    }
+
     render() {
         return (
             <div className="patient-list">
-                <PatientInput/>
                 <PatientSearch filter={this.filterList}/>
-                <ul>
+                <ul className="nav">
                     {this.state.patients.length > 0 &&
                     this.state.filteredPatients.map((patient: PatientModel) => {
-                        return <Patient setpatientid={this.props.setpatientid} key={patient.patientId} {...patient} />;
+                        return <Patient activePatient={this.props.activePatient} setpatientid={this.props.setpatientid} key={patient.patientId} {...patient} />;
                     })}
                 </ul>
+                <PatientInput/>
             </div>
         );
     }
