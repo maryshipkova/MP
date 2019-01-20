@@ -55,7 +55,7 @@ export class PatientInput extends React.Component<Props, State> {
     render() {
         return (
             <div className="patientInput">
-                <button className="btn btn-primary" data-toggle="modal" data-target="#addPatient">Добавить Пацента</button>
+                <button className="btn btn-primary" data-toggle="modal" data-target="#addPatient">Добавить Пациента</button>
 
                 <div className="modal" id="addPatient" tabIndex="-1" role="dialog">
                     <div className="modal-dialog" role="document">
