@@ -6,6 +6,11 @@ li.patient {
     padding: .5rem;
     width: 100%;
     cursor: pointer;
+    text-overflow: ellipsis;
+    height: 2rem;
+    max-height: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 li.patient:hover {

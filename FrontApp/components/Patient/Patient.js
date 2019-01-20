@@ -19,9 +19,9 @@ export const Patient = (props: PatientModel) => {
     return (
 
         <li className={props.activePatient == props.patientId ? "active patient" : "patient"} onClick={setPatientId}>
-            <span className="nameAgeGender">
+            <p className="nameAgeGender">
                 {`${props.lastName} ${props.firstName} ${props.genderType.name}, ${getFullDate(props.birthDate)}`}
-            </span>
+            </p>
         </li>
     )
 };

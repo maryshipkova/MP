@@ -30,7 +30,7 @@ class Check extends React.Component {
     render() {
         return <div className="main-layout">
             <nav className="col-md-2 d-none d-md-block bg-light sidebar"><PatientList activePatient={this.state.patientId} setpatientid={this.setPatientId}/></nav>
-            <div className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 main"><PatientTimeLine patientid={this.state.patientId}/></div>
+            <div className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 main full-timeline"><PatientTimeLine patientid={this.state.patientId}/></div>
         </div>;
     }
 }

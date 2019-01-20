@@ -106,7 +106,7 @@ export class PatientTimeLine extends React.Component {
 
     render() {
         return (
-            <div className="full-timeline">
+            <React.Fragment>
                 <div className="text-center patient-info">
                     <span className="text-muted mx-2">
                         Пациент:
@@ -137,7 +137,7 @@ export class PatientTimeLine extends React.Component {
                         })}
                     </ul>
                 </section>
-            </div>
+            </React.Fragment>
         );
     }
 }
