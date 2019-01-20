@@ -18,21 +18,23 @@
     position: relative;
     width: 6px;
     margin: 0 auto;
-    padding-top: 50px;
+    padding-top: 70px;
     background: rgba(0, 0, 0, .125);
+
 }
 
-.timeline ul li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: inherit;
+.timeline ul li:not(:first-child)::after {
+     content: '';
+     position: absolute;
+     left: 50%;
+     bottom: 0;
+     transform: translateX(-50%);
+     width: 30px;
+     height: 30px;
+     border-radius: 50%;
+     background: inherit;
 }
+
 
 .timeline ul li div {
     position: relative;
@@ -105,8 +107,8 @@ time {
 }
 
 .add-btn {
-    position: absolute;
-    transform: translate(-50%, -95%);
+    position: relative;
+    transform: translate(-50%, -190%);
     min-width: 200px;
     min-height: 25px;
 }

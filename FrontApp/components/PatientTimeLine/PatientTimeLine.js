@@ -23,7 +23,7 @@ export class PatientTimeLine extends React.Component {
             console.log(res.data);
             this.setState({
                 patient: res.data.history.patient,
-                statuses: res.data.history.statuses.list,
+                statuses: res.data.history.statuses.list.reverse(),
                 gender: res.data.history.patient.genderType.name
             });
 
@@ -76,7 +76,7 @@ export class PatientTimeLine extends React.Component {
         }).then(res => {
             this.setState({
                 patient: res.data.history.patient,
-                statuses: res.data.history.statuses.list,
+                statuses: res.data.history.statuses.list.reverse(),
                 gender: res.data.history.patient.genderType.name
             });
         });
@@ -93,7 +93,7 @@ export class PatientTimeLine extends React.Component {
     addState() {
         let currentState = this.state.statuses.slice();
         this.getMaxStatusId();
-        currentState.push({
+        currentState.unshift({
             statusId: this.getMaxStatusId() + 1,
             parameters: {},
             medicines: [],
@@ -121,12 +121,6 @@ export class PatientTimeLine extends React.Component {
                 </div>
                 <section className="timeline mt-3">
                     <ul ref={(ul) => this.list = ul}>
-                        {this.state.statuses.map(status => {
-                            return <PatientTimeLineItem
-                                {...status}
-                                patientid={this.props.patientid}
-                                key={status.statusId}/>
-                        })}
                         <li>
                             <button className="add-btn btn btn-primary"
                                     onClick={this.addState}
@@ -135,6 +129,12 @@ export class PatientTimeLine extends React.Component {
                                 Добавить состояние
                             </button>
                         </li>
+                        {this.state.statuses.map(status => {
+                            return <PatientTimeLineItem
+                                {...status}
+                                patientid={this.props.patientid}
+                                key={status.statusId}/>
+                        })}
                     </ul>
                 </section>
             </div>
