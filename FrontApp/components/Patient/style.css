@@ -1,8 +1,8 @@
 li.patient {
     display: flex;
     flex-direction: row;
-    color: #0088cc;
-    border: 2px solid #ccc;
+    font-weight: 500;
+    color: #333;
     padding: .5rem;
     width: 100%;
     cursor: pointer;
@@ -10,4 +10,8 @@ li.patient {
 
 li.patient:hover {
     background-color: gainsboro;
+}
+
+li.active{
+    color: #007bff;
 }
