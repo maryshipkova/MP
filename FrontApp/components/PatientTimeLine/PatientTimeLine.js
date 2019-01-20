@@ -106,7 +106,7 @@ export class PatientTimeLine extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="full-timeline">
                 <div className="text-center patient-info">
                     <span className="text-muted mx-2">
                         Пациент:

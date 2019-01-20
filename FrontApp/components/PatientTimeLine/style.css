@@ -24,17 +24,16 @@
 }
 
 .timeline ul li:not(:first-child)::after {
-     content: '';
-     position: absolute;
-     left: 50%;
-     bottom: 0;
-     transform: translateX(-50%);
-     width: 30px;
-     height: 30px;
-     border-radius: 50%;
-     background: inherit;
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: inherit;
 }
-
 
 .timeline ul li div {
     position: relative;
@@ -115,4 +114,11 @@ time {
 
 .patient-info {
     border: 1px
+}
+
+.full-timeline {
+    height: 100vh;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
