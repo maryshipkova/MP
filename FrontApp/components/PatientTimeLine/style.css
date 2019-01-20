@@ -1,10 +1,10 @@
 /* TIMELINE
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.timeline{
+.timeline {
     width: 75vw;
     min-height: 100vh;
-    background: #456990;
+    background: white;
 }
 
 .timeline ul {
@@ -19,7 +19,7 @@
     width: 6px;
     margin: 0 auto;
     padding-top: 50px;
-    background: #fff;
+    background: rgba(0, 0, 0, .125);
 }
 
 .timeline ul li:not(:last-child)::after {
@@ -39,15 +39,16 @@
     bottom: 0;
     width: 25vw;
     padding: 15px;
-    background: #F45B69;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 6px;
+    box-shadow: 0 .5rem .5rem rgba(0, 0, 0, .075)
 }
-
 
 .timeline ul li:nth-child(odd) div {
     left: 1vw;
-    bottom:1vw;
+    bottom: 1vw;
+    margin-top: 3vw;
 }
-
 
 time {
     display: block;
@@ -58,7 +59,7 @@ time {
 
 .timeline ul li div:nth-child(2n+1) {
     position: relative;
-    left: -27.5vw !important;
+    left: -25.5vw !important;
     bottom: 1vw;
 }
 
@@ -69,7 +70,7 @@ time {
 .timeline ul li:nth-child(2n) div:nth-child(2n) {
     position: absolute;
     left: 1vw;
-    bottom:1vw;
+    bottom: 1vw;
 }
 
 /* EFFECTS
@@ -80,7 +81,7 @@ time {
 }
 
 .timeline ul li.in-view::after {
-    background: #F45B69;
+    background: #c6c6c6;
 }
 
 .timeline ul li div {
@@ -105,7 +106,11 @@ time {
 
 .add-btn {
     position: absolute;
-    transform: translate(-50%,-95%);
-    min-width: 100px;
+    transform: translate(-50%, -95%);
+    min-width: 200px;
     min-height: 25px;
+}
+
+.patient-info {
+    border: 1px
 }
