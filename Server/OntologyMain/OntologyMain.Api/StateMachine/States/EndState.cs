@@ -2,6 +2,9 @@
 
 namespace OntologyMain.Api.StateMachine.States
 {
+  /// <summary>
+  /// Конечное состояние пациента (техническое состояние)
+  /// </summary>
   public class EndState : BaseState
   {
     public EndState()

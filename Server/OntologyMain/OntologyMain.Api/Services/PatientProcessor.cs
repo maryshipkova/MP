@@ -8,7 +8,10 @@ namespace OntologyMain.Api.Services
 {
   public class PatientProcessor
   {
-    private static readonly Dictionary<StateType, Func<BaseState>> stateSwitch = new Dictionary<StateType, Func<BaseState>>()
+    /// <summary>
+    /// Восстановление состояния на основании StateType (номера состояния из бд)
+    /// </summary>
+    private static readonly Dictionary<StateType, Func<BaseState>> StateSwitch = new Dictionary<StateType, Func<BaseState>>()
     {
       { StateType.Initial, () => new InitialState() },
       { StateType.End, () => new EndState() },
@@ -23,9 +26,15 @@ namespace OntologyMain.Api.Services
       { StateType.State10, () => new State10() }
     };
 
+    /// <summary>
+    /// Восстанавливает состояние пациента из пришедших из базы данных и осуществляет вызов метода перехода в новое состояние
+    /// </summary>
+    /// <param name="currentStateType"></param>
+    /// <param name="currentStatus"></param>
+    /// <returns>Возвращает новое состояние</returns>
     public static StateType ProcessPatient(StateType currentStateType, Status currentStatus)
     {
-      var currentState = stateSwitch[currentStateType]();
+      var currentState = StateSwitch[currentStateType]();
       return currentState.NextState(currentStatus).StateType;
     }
   }

@@ -18,11 +18,14 @@ namespace OntologyMain.Data.Repositories
       Db = db;
     }
 
-    public async Task<bool> IsPatientExistAsync(int patientId)
-    {
-      return await Db.PatientEntities.AnyAsync(x => x.PatientId == patientId);
-    }
-
+    /// <summary>
+    ///   Создает пациента в базе данных
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
+    /// <param name="birthDate"></param>
+    /// <param name="sexType"></param>
+    /// <returns>Новый пациент</returns>
     public async Task<PatientDto> CreatePatientAsync(string firstName, string lastName, DateTime birthDate,
       GenderType sexType)
     {
@@ -72,16 +75,24 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Получение списка пациентов
+    /// </summary>
+    /// <returns>Список пациентов</returns>
     public async Task<List<PatientEntity>> GetPatientsAsync()
     {
       return await Db.PatientEntities.ToListAsync();
     }
 
+    /// <summary>
+    ///   Получение конкретного пациента
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>Определенный пациент</returns>
     public async Task<PatientDto> GetPatientAsync(int patientId)
     {
       var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
-      if (patient == null)
-        return null;
+      if (patient == null) return null;
 
       var state = await Db.StateEntities.FirstOrDefaultAsync(x => x.StateId == patient.StateId);
       var status = await Db.StatusEntities.FirstOrDefaultAsync(x => x.StatusId == patient.StatusId);
@@ -92,6 +103,12 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Получение определенного состояния определенного пациента
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <param name="stateId"></param>
+    /// <returns>Состояние пациента</returns>
     public async Task<StateDto> GetStateAsync(int patientId, int stateId)
     {
       var state = await Db.StateEntities.FirstOrDefaultAsync(x => x.PatientId == patientId && x.StateId == stateId);
@@ -99,6 +116,12 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Получение определенного статуса определенного пациента
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <param name="statusId"></param>
+    /// <returns>Статус пациента</returns>
     public async Task<StatusDto> GetStatusAsync(int patientId, int statusId)
     {
       var status = await Db.StatusEntities.FirstOrDefaultAsync(x => x.PatientId == patientId && x.StatusId == statusId);
@@ -106,6 +129,12 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Добавление статус пациенту
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <param name="parameters"></param>
+    /// <returns>Новый статус пациента</returns>
     public async Task<StatusDto> AddStatusAsync(int patientId, ParametersDto parameters)
     {
       var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
@@ -114,10 +143,10 @@ namespace OntologyMain.Data.Repositories
       {
         PatientId = patientId,
         PreviousStatusId = patient.StatusId,
-         IsHospitalized = parameters.IsHospitalized,
-          IsWheezing = parameters.IsWheezing,
-           Pef = parameters.Pef,
-            SpO2 = parameters.SpO2,
+        IsHospitalized = parameters.IsHospitalized,
+        IsWheezing = parameters.IsWheezing,
+        Pef = parameters.Pef,
+        SpO2 = parameters.SpO2,
         CreatedDate = DateTime.UtcNow
       };
 
@@ -131,6 +160,12 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Добавление состояния пациенту
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <param name="nextState"></param>
+    /// <returns>Новое состояние пациента</returns>
     public async Task<StateDto> AddStateAsync(int patientId, StateType nextState)
     {
       var patient = await Db.PatientEntities.FirstOrDefaultAsync(x => x.PatientId == patientId);
@@ -154,16 +189,26 @@ namespace OntologyMain.Data.Repositories
       return result;
     }
 
+    /// <summary>
+    ///   Получение списка всех состояний конкретного пациента
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>Список состояний</returns>
     public async Task<List<StateDto>> GetStatesAsync(int patientId)
     {
-      return await Db.StateEntities.Where(x => x.PatientId == patientId).OrderBy(x=>x.CreatedDate).Select(state => StateDto.FromEntity(state))
-        .ToListAsync();
+      return await Db.StateEntities.Where(x => x.PatientId == patientId).OrderBy(x => x.CreatedDate)
+        .Select(state => StateDto.FromEntity(state)).ToListAsync();
     }
 
+    /// <summary>
+    ///   Получение списка всех статусов конкретного пациента
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>Список статусов</returns>
     public async Task<List<StatusDto>> GetStatusesAsync(int patientId)
     {
-      var result = await Db.StatusEntities.Where(x => x.PatientId == patientId).OrderBy(x => x.CreatedDate).Select(status => StatusDto.FromEntity(status))
-        .ToListAsync();
+      var result = await Db.StatusEntities.Where(x => x.PatientId == patientId).OrderBy(x => x.CreatedDate)
+        .Select(status => StatusDto.FromEntity(status)).ToListAsync();
       return result;
     }
   }

@@ -4,6 +4,9 @@ using OntologyMain.Data.Dtos;
 
 namespace OntologyMain.Api.StateMachine
 {
+  /// <summary>
+  /// Неизменяемый объект, описывающий текущий статус (физическое состояние) пациента
+  /// </summary>
   public class Status
   {
     public int StatusId { get; set; }
@@ -45,6 +48,10 @@ namespace OntologyMain.Api.StateMachine
       return result;
     }
 
+    /// <summary>
+    /// Сравниваем текущий и предыдущий статус на изменения.
+    /// </summary>
+    /// <returns>Булевское значение - есть ли изменения</returns>
     public bool IsAnyChanged()
     {
       if (PreviousStatus == null) return false;
@@ -58,6 +65,10 @@ namespace OntologyMain.Api.StateMachine
       return false;
     }
 
+    /// <summary>
+    /// Получение времени существования текущего статуса пациента
+    /// </summary>
+    /// <returns>Время существования статуса</returns>
     public TimeSpan ElapsedTime()
     {
       return ElapsedTime(EndDate == DateTime.MinValue ? DateTime.UtcNow : EndDate);

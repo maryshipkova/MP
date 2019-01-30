@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
 using CommonLibraries.Response;
@@ -9,6 +10,9 @@ using OntologyMain.Api.ViewModels;
 
 namespace OntologyMain.Api.Controllers
 {
+  /// <summary>
+  /// Ontology controller
+  /// </summary>
   [EnableCors("AllowAllOrigin")]
   [Route("ontology")]
   [ApiController]
@@ -32,7 +36,12 @@ namespace OntologyMain.Api.Controllers
     //  return new OkResponseResult("Signs", new {Signs = result});
     //}
 
+    /// <summary>
+    /// Get list of the medicines
+    /// </summary>
+    /// <returns>List of the medicines</returns>
     [HttpGet("medicines")]
+    [ProducesResponseType(typeof(List<TypeViewModel>), 200)]
     public IActionResult GetMedicines()
     {
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetMedicines)}: Start.");

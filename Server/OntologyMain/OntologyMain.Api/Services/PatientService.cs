@@ -11,6 +11,9 @@ using OntologyMain.Data.Repositories;
 
 namespace OntologyMain.Api.Services
 {
+  /// <summary>
+  ///   Сервис для пациентов. Осуществление логики работы с пациентами, отдача в контроллеры данных
+  /// </summary>
   public class PatientService
   {
     private PatientsRepository Db { get; }
@@ -22,6 +25,14 @@ namespace OntologyMain.Api.Services
       Logger = logger;
     }
 
+    /// <summary>
+    ///   Создание пациента на основании введенных параметров
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
+    /// <param name="birthDate"></param>
+    /// <param name="sexType"></param>
+    /// <returns>Созданного пациента с его начальным состоянием и статусом</returns>
     public async Task<FullPatientViewModel> CreatePatient(string firstName, string lastName, DateTime birthDate,
       GenderType sexType)
     {
@@ -34,6 +45,11 @@ namespace OntologyMain.Api.Services
       return patient;
     }
 
+    /// <summary>
+    ///   Получение пациента с текущим статусом и состоянием
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>Пациент с текущим статусом и состоянием</returns>
     public async Task<FullPatientViewModel> GetPatient(int patientId)
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(GetPatient)}: Start.");
@@ -41,8 +57,7 @@ namespace OntologyMain.Api.Services
       var patientDb = await Db.GetPatientAsync(patientId);
       if (patientDb == null)
       {
-        Logger.LogError(
-          $"{nameof(PatientService)}.{nameof(GetPatient)}: There is no patient with patientId: {patientId}.");
+        Logger.LogError($"{nameof(PatientService)}.{nameof(GetPatient)}: There is no patient with patientId: {patientId}.");
         Logger.LogInformation($"{nameof(PatientService)}.{nameof(GetPatient)}: End.");
         return null;
       }
@@ -54,6 +69,10 @@ namespace OntologyMain.Api.Services
       return patient;
     }
 
+    /// <summary>
+    ///   Получение списка всех пациентов в системе
+    /// </summary>
+    /// <returns>Список пациентов с урезанной информацией (ФИО, год рожд., пол)</returns>
     public async Task<List<PatientViewModel>> GetPatients()
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(GetPatients)}: Start.");
@@ -65,6 +84,12 @@ namespace OntologyMain.Api.Services
       return patients;
     }
 
+    /// <summary>
+    ///   Добавить новый статус (физическое состояние) пациенту и сделать переход по машине состояний
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <param name="parameters"></param>
+    /// <returns>Пациент с текущим статусом и состоянием</returns>
     public async Task<FullPatientViewModel> AddPatientStatus(int patientId, ParametersDto parameters)
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(AddPatientStatus)}: Start.");
@@ -87,6 +112,12 @@ namespace OntologyMain.Api.Services
       return patient;
     }
 
+    /// <summary>
+    ///   Осуществить переход по машине состояний для данного пациента. Это можно использовать, если не было передано ни одного
+    ///   нового статуса
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>Пациент с текущим статусом и состоянием</returns>
     public async Task<FullPatientViewModel> AddPatientState(int patientId)
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(AddPatientStatus)}: Start.");
@@ -109,6 +140,11 @@ namespace OntologyMain.Api.Services
       return patient;
     }
 
+    /// <summary>
+    ///   Получение истории пациента. Всех его состояний и статусов  в хронологическом порядке
+    /// </summary>
+    /// <param name="patientId"></param>
+    /// <returns>История пациента</returns>
     public async Task<HistoryViewModel> GetPatientHistory(int patientId)
     {
       Logger.LogInformation($"{nameof(PatientService)}.{nameof(GetPatientHistory)}: Start.");
@@ -152,6 +188,11 @@ namespace OntologyMain.Api.Services
       return history;
     }
 
+    /// <summary>
+    ///   Конвертер из DTO (data transport objet) в ViewModel (модель представления)
+    /// </summary>
+    /// <param name="patientDto"></param>
+    /// <returns></returns>
     private static FullPatientViewModel FromDtoToViewModel(PatientDto patientDto)
     {
       var patient = FullPatientViewModel.FromPatientDto(patientDto);
