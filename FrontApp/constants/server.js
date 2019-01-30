@@ -1,0 +1,1 @@
+export const serverDomain = "https://api.4buttons.ru/v0.1";

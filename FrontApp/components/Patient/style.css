@@ -1,13 +1,22 @@
-.patient {
+li.patient {
     display: flex;
     flex-direction: row;
+    font-weight: 500;
+    color: #333;
+    padding: .5rem;
+    width: 100%;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    height: 2rem;
+    max-height: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.photo {
-    width:100px;
-    height:100px;
+li.patient:hover {
+    background-color: gainsboro;
 }
 
-.nameAgeGender{
-    margin-left: 10px;
+li.active{
+    color: #007bff;
 }

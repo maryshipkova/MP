@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
@@ -24,22 +24,7 @@ namespace OntologyMain.Api.Controllers
     {
       Logger = logger;
     }
-
-    //[HttpGet("signs")]
-    //public IActionResult GetSigns()
-    //{
-    //  Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: Start.");
-
-    //  var result = SignType.GetList().Select(x => new TypeViewModel {Id = x.Id, Name = x.Name});
-
-    //  Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetSigns)}: End.");
-    //  return new OkResponseResult("Signs", new {Signs = result});
-    //}
-
-    /// <summary>
-    /// Get list of the medicines
-    /// </summary>
-    /// <returns>List of the medicines</returns>
+    
     [HttpGet("medicines")]
     [ProducesResponseType(typeof(List<TypeViewModel>), 200)]
     public IActionResult GetMedicines()

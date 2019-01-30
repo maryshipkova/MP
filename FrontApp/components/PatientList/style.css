@@ -1,0 +1,16 @@
+.patient-list {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+
+}
+
+.patient-list > ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.patient-list > button{
+    margin-top: 25px !important;
+}

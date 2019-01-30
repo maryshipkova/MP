@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+}
+
+.main-layout{
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.main{
+    margin-left: auto !important;
+    background: #e8ebee;
+}
+
+
+.modal-backdrop{
+    display: none !important;
+}

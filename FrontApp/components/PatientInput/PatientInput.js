@@ -4,6 +4,7 @@ import React from 'react';
 import './style.css';
 import {PatientModel} from 'models/PatientModel';
 import {sexType} from 'types/SexType';
+import {serverDomain} from "constants/server";
 
 type Props = {};
 
@@ -19,7 +20,7 @@ export class PatientInput extends React.Component<Props, State> {
             patient: {
                 firstName: "",
                 lastName: "",
-                sexType: "None",
+                genderType: 0,
                 birthDate: ""
             }
         };
@@ -30,7 +31,7 @@ export class PatientInput extends React.Component<Props, State> {
     addPatient(event) {
         this.firstName = this.firstName.value;
         this.lastName = this.lastName.value;
-        this.sexType = this.sexType[this.sexType.selectedIndex].value;
+        this.genderType = this.genderType[this.genderType.selectedIndex].value;
         this.birthDate = this.birthDate.value;
 
         const requestOptions = {
@@ -41,28 +42,66 @@ export class PatientInput extends React.Component<Props, State> {
             body: JSON.stringify({
                 FirstName: this.firstName,
                 LastName: this.lastName,
-                SexType: this.sexType,
+                GenderType: this.genderType,
                 BirthDate: this.birthDate
             })
         };
-        fetch("https://api.4buttons.ru/v0.1/patients", requestOptions);
+        fetch(`${serverDomain}/patients`, requestOptions);
 
         event.preventDefault();
+        window.location.reload();
     }
 
     render() {
         return (
-            <form className="patient" onSubmit={e => this.addPatient(e)}>
-                <input ref={input => this.firstName = input}/>
-                <input ref={input => this.lastName = input}/>
-                <select ref={selected => this.sexType = selected} defaultValue="0">
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                    <option value="0">Not specified</option>
-                </select>
-                <input type="date" ref={date => this.birthDate = date}/>
-                <button type="submit">Send form</button>
-            </form>
+            <div className="patientInput">
+                <button className="btn btn-primary" data-toggle="modal" data-target="#addPatient">Добавить Пациента</button>
+
+                <div className="modal" id="addPatient" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Новый пациент</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div className="modal-body">
+                                <form className="patient" onSubmit={e => this.addPatient(e)}>
+                                    <div className="form-group">
+                                        <label>Имя</label>
+                                        <input className="form-control" ref={input => this.firstName = input} placeholder="Имя"/>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Фамилия</label>
+                                        <input className="form-control" ref={input => this.lastName = input} placeholder="Фамилия"/>
+                                    </div>
+
+
+                                    <div className="form-group">
+                                        <label>Пол</label>
+                                        <select className="form-control" ref={selected => this.genderType = selected} defaultValue="0">
+                                            <option value="1">Мужской</option>
+                                            <option value="2">Женский</option>
+                                            <option value="0">Не указано</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="form-group">
+                                        <label>Дата рождения</label>
+                                        <input className="form-control" type="date" ref={date => this.birthDate = date}/>
+                                    </div>
+
+                                    <button type="submit" className="btn btn-primary">Готово</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 };

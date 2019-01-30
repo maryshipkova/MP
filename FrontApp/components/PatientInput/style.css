@@ -1,0 +1,19 @@
+.patient input, select{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.patient button{
+    width: 150px;
+    margin-bottom: 30px;
+}
+
+.patient{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.patientInput{
+    margin-top: 25px;
+}
