@@ -4,11 +4,19 @@ using CommonLibraries.CommonTypes;
 
 namespace OntologyMain.Api.Services
 {
+  /// <summary>
+  /// Описание всех состояний медицинскими словами с рекомендованными препаратами под каждое состояние.
+  /// </summary>
   public class StateContext
   {
     public string Description { get; set; } = string.Empty;
     public IEnumerable<MedicineType> Medicines { get; set; } = new List<MedicineType>();
 
+    /// <summary>
+    /// Создает новый контекст состояния (связный объект описания и списка лекарств) по введенному типу состояния
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static StateContext FromState(StateType type)
     {
       if (type == StateType.Initial) return new StateContext {Description = $"Состояние: 'Initial State'.{Environment.NewLine}Начальное состояние" };

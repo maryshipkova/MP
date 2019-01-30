@@ -1,5 +1,8 @@
 ﻿namespace OntologyMain.Api.StateMachine
 {
+  /// <summary>
+  /// Параметры, описывающие состояния больного при бронхиальной астмы
+  /// </summary>
   public class Parameters
   {
     public bool IsWheezing { get; set; }

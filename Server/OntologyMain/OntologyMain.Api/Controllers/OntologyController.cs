@@ -1,4 +1,6 @@
-﻿using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CommonLibraries.CommonTypes;
 using CommonLibraries.Response;
 using Microsoft.AspNetCore.Cors;
@@ -8,6 +10,9 @@ using OntologyMain.Api.ViewModels;
 
 namespace OntologyMain.Api.Controllers
 {
+  /// <summary>
+  /// Ontology controller
+  /// </summary>
   [EnableCors("AllowAllOrigin")]
   [Route("ontology")]
   [ApiController]
@@ -19,8 +24,9 @@ namespace OntologyMain.Api.Controllers
     {
       Logger = logger;
     }
-
+    
     [HttpGet("medicines")]
+    [ProducesResponseType(typeof(List<TypeViewModel>), 200)]
     public IActionResult GetMedicines()
     {
       Logger.LogInformation($"{nameof(OntologyController)}.{nameof(GetMedicines)}: Start.");

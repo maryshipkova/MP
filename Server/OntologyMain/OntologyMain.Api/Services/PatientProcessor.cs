@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommonLibraries.CommonTypes;
 using OntologyMain.Api.StateMachine;
 using OntologyMain.Api.StateMachine.States;
@@ -7,26 +8,34 @@ namespace OntologyMain.Api.Services
 {
   public class PatientProcessor
   {
+    /// <summary>
+    /// Восстановление состояния на основании StateType (номера состояния из бд)
+    /// </summary>
+    private static readonly Dictionary<StateType, Func<BaseState>> StateSwitch = new Dictionary<StateType, Func<BaseState>>()
+    {
+      { StateType.Initial, () => new InitialState() },
+      { StateType.End, () => new EndState() },
+      { StateType.State2, () => new State2() },
+      { StateType.State3, () => new State3() },
+      { StateType.State4, () => new State4() },
+      { StateType.State5, () => new State5() },
+      { StateType.State6, () => new State6() },
+      { StateType.State7, () => new State7() },
+      { StateType.State8, () => new State8() },
+      { StateType.State9, () => new State9() },
+      { StateType.State10, () => new State10() }
+    };
+
+    /// <summary>
+    /// Восстанавливает состояние пациента из пришедших из базы данных и осуществляет вызов метода перехода в новое состояние
+    /// </summary>
+    /// <param name="currentStateType"></param>
+    /// <param name="currentStatus"></param>
+    /// <returns>Возвращает новое состояние</returns>
     public static StateType ProcessPatient(StateType currentStateType, Status currentStatus)
     {
-      var currentState = Switch(currentStateType);
+      var currentState = StateSwitch[currentStateType]();
       return currentState.NextState(currentStatus).StateType;
-    }
-
-    private static BaseState Switch(StateType stateType)
-    {
-      if (stateType == StateType.Initial) return new InitialState();
-      if (stateType == StateType.End) return new EndState();
-      if (stateType == StateType.State2) return new State2();
-      if (stateType == StateType.State3) return new State3();
-      if (stateType == StateType.State4) return new State4();
-      if (stateType == StateType.State5) return new State5();
-      if (stateType == StateType.State6) return new State6();
-      if (stateType == StateType.State7) return new State7();
-      if (stateType == StateType.State8) return new State8();
-      if (stateType == StateType.State9) return new State9();
-      if (stateType == StateType.State10) return new State10();
-      throw new ArgumentOutOfRangeException($"{nameof(PatientProcessor)}.{nameof(Switch)}: There is no such state: {stateType.Id} {stateType.Name}");
     }
   }
 }
